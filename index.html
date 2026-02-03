@@ -8,7 +8,12 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #f3f4ff, #fff6ef);
+  background: linear-gradient(
+    135deg,
+    #fafcff,
+    #f6fff8,
+    #fff7f0
+  );
   font-family: Arial, sans-serif;
   overflow: hidden;
   opacity: 0;
@@ -41,20 +46,23 @@ button {
   margin: 18px 12px 0;
 }
 
+/* 💚 YES = GREEN FLAG */
 #yes {
-  background: linear-gradient(135deg, #ff758f, #ff4d6d);
-  color: white;
-  box-shadow: 0 10px 25px rgba(255,77,109,0.35);
+  background: linear-gradient(135deg, #9be7c4, #4fd1a5);
+  color: #0f5132;
+  box-shadow: 0 10px 25px rgba(79,209,165,0.45);
 }
 
 #yes:hover {
   transform: scale(1.12);
 }
 
+/* 🏃 NO runs away but stays visible */
 #no {
   background: #b0b0b0;
   color: white;
   position: absolute;
+  transition: left 0.25s ease, top 0.25s ease;
 }
 
 .reveal {
@@ -120,12 +128,12 @@ button {
 <body>
 
 <div class="container" id="content">
-  <h1> Hey Kajal, 11 February wasn’t just a date.</h1>
+  <h1>Hey Kajal, 11 February wasn’t just a date.</h1>
   <h2>It was a choice.</h2>
   <h3>Will you choose me again?</h3>
 
-  <button id="yes" onclick="yesClicked(event)">Yes</button>
-  <button id="no" onmouseover="moveNo()">No</button>
+  <button id="yes" aria-label="Yes, I choose you" onclick="yesClicked(event)">Yes</button>
+  <button id="no" aria-label="No" onmouseover="moveNo()">No</button>
 </div>
 
 <audio id="bgMusic" src="music.mp3" loop></audio>
@@ -133,8 +141,12 @@ button {
 <script>
 function moveNo() {
   const btn = document.getElementById("no");
-  btn.style.left = Math.random() * (window.innerWidth - 120) + "px";
-  btn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+  const padding = 20;
+  const maxX = window.innerWidth - btn.offsetWidth - padding;
+  const maxY = window.innerHeight - btn.offsetHeight - padding;
+
+  btn.style.left = Math.random() * maxX + "px";
+  btn.style.top = Math.random() * maxY + "px";
 }
 
 function sparkle(x, y) {
@@ -151,7 +163,11 @@ function sparkle(x, y) {
 
 function yesClicked(e) {
   sparkle(e.clientX, e.clientY);
-  document.getElementById("bgMusic").play();
+
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.6;
+  music.play().catch(() => {});
+
   document.getElementById("yes").disabled = true;
   document.getElementById("no").remove();
 
@@ -162,7 +178,7 @@ function yesClicked(e) {
     content.innerHTML = `
       <div class="reveal show">
         <h1>In every version of my life…</h1>
-        <h2>it’s you ❤️</h2>
+        <h2>it’s you 💚</h2>
 
         <img src="us.jpg">
 
@@ -207,6 +223,13 @@ function yesClicked(e) {
 
   }, 700);
 }
+
+/* Start NO button near YES */
+window.onload = () => {
+  const no = document.getElementById("no");
+  no.style.left = "55%";
+  no.style.top = "60%";
+};
 </script>
 
 </body>
