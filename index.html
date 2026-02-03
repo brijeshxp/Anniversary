@@ -95,7 +95,7 @@ button {
   top: -140px;
   opacity: 0.45;
   animation: fallDown linear infinite;
-  filter: blur(0.6px);
+  filter: blur(0.3px);
   border-radius: 14px;
 }
 
@@ -210,7 +210,7 @@ function yesClicked(e) {
       img.className = "fall";
       img.style.left = Math.random() * 100 + "vw";
       img.style.animationDuration = (16 + Math.random() * 8) + "s";
-      img.style.width = (120 + Math.random() * 120) + "px";
+      img.style.width = (250 + Math.random() * 200) + "px";
       document.body.appendChild(img);
     });
 
@@ -247,4 +247,5 @@ window.onload = () => {
 
 </body>
 </html>
+
 
