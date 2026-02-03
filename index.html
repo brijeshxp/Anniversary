@@ -41,7 +41,7 @@ button {
   margin: 18px 12px 0;
 }
 
-/* 💚 YES = GREEN FLAG */
+/* 💚 YES */
 #yes {
   background: linear-gradient(135deg, #9be7c4, #4fd1a5);
   color: #0f5132;
@@ -52,11 +52,11 @@ button {
   transform: scale(1.12);
 }
 
-/* 🏃 NO button — always visible, runs away */
+/* 🏃 NO — always visible */
 #no {
   background: #b0b0b0;
   color: white;
-  position: fixed; /* IMPORTANT */
+  position: fixed;
   transition: left 0.18s ease, top 0.18s ease;
 }
 
@@ -103,7 +103,6 @@ button {
   to { transform: translateY(140vh) rotate(360deg); opacity: 0; }
 }
 
-/* ✨ Sparkles */
 .sparkle {
   position: absolute;
   pointer-events: none;
@@ -136,7 +135,7 @@ button {
 <script>
 const noBtn = document.getElementById("no");
 
-/* Move NO only when user tries to interact */
+/* Move NO away from cursor, stay on screen */
 function moveNo() {
   const padding = 20;
   const maxX = window.innerWidth - noBtn.offsetWidth - padding;
@@ -152,6 +151,7 @@ function moveNo() {
 noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("mousedown", moveNo);
 
+/* Sparkles */
 function sparkle(x, y) {
   for (let i = 0; i < 10; i++) {
     const s = document.createElement("div");
@@ -164,6 +164,7 @@ function sparkle(x, y) {
   }
 }
 
+/* YES clicked */
 function yesClicked(e) {
   sparkle(e.clientX, e.clientY);
 
@@ -201,50 +202,18 @@ function yesClicked(e) {
     setTimeout(() => {
       document.getElementById("lateLine").style.opacity = "1";
     }, 3000);
-
-    const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
-
-    pics.forEach(pic => {
-      const img = document.createElement("img");
-      img.src = pic;
-      img.className = "fall";
-      img.style.left = Math.random() * 100 + "vw";
-      img.style.animationDuration = (16 + Math.random() * 8) + "s";
-      img.style.width = (120 + Math.random() * 120) + "px";
-      document.body.appendChild(img);
-    });
-
-    for (let i = 0; i < 6; i++) {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (8 + Math.random() * 6) + "s";
-      heart.style.fontSize = (14 + Math.random() * 14) + "px";
-      document.body.appendChild(heart);
-    }
-
   }, 700);
 }
 
-/* Place NO initially next to YES */
+/* ✅ START: place NO exactly beside YES */
 window.onload = () => {
   const yesBtn = document.getElementById("yes");
-  const container = document.getElementById("content");
-
   const yesRect = yesBtn.getBoundingClientRect();
-  const containerRect = container.getBoundingClientRect();
 
-  // Place NO exactly to the right of YES, aligned vertically
-  noBtn.style.left =
-    yesRect.right - containerRect.left + 20 + "px";
-
-  noBtn.style.top =
-    yesRect.top - containerRect.top + "px";
+  noBtn.style.left = yesRect.right + 20 + "px";
+  noBtn.style.top  = yesRect.top + "px";
 };
-
 </script>
 
 </body>
 </html>
-
