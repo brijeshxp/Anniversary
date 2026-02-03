@@ -229,12 +229,22 @@ function yesClicked(e) {
 
 /* Place NO initially next to YES */
 window.onload = () => {
-  const yes = document.getElementById("yes");
-  const rect = yes.getBoundingClientRect();
-  noBtn.style.left = rect.right + 20 + "px";
-  noBtn.style.top = rect.top + "px";
+  const yesBtn = document.getElementById("yes");
+  const container = document.getElementById("content");
+
+  const yesRect = yesBtn.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+
+  // Place NO exactly to the right of YES, aligned vertically
+  noBtn.style.left =
+    yesRect.right - containerRect.left + 20 + "px";
+
+  noBtn.style.top =
+    yesRect.top - containerRect.top + "px";
 };
+
 </script>
 
 </body>
 </html>
+
