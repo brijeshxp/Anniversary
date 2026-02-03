@@ -78,7 +78,7 @@ button {
   bottom: -20px;
   font-size: 18px;
   opacity: 0.25;
-  animation: floatUp 12s linear infinite;
+  animation: floatUp linear infinite;
 }
 
 @keyframes floatUp {
@@ -93,13 +93,16 @@ button {
   position: absolute;
   top: -120px;
   width: 70px;
-  opacity: 0.25;
-  animation: fallDown linear infinite;
+  opacity: 0.5;
+  animation-name: fallDown;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 @keyframes fallDown {
   to {
-    transform: translateY(130vh) rotate(10deg);
+    transform: translateY(130vh) rotate(360deg);
+    opacity: 0;
   }
 }
 </style>
@@ -108,7 +111,6 @@ button {
 <body>
 
 <div class="container" id="content">
-  <!-- YOU ALREADY MANAGED WORDS – KEEP YOUR TEXT HERE -->
   <h1>11·02 wasn’t just a date.</h1>
   <h2>It was a choice.</h2>
 
@@ -156,12 +158,13 @@ function yesClicked() {
 }
 
 /* ---------- HEARTS ---------- */
-for (let i = 0; i < 3; i++) {
+for (let i = 0; i < 5; i++) {
   const heart = document.createElement("div");
   heart.className = "heart";
   heart.innerHTML = "❤️";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (10 + Math.random() * 6) + "s";
+  heart.style.animationDuration = (8 + Math.random() * 6) + "s";
+  heart.style.fontSize = (12 + Math.random() * 12) + "px";
   document.body.appendChild(heart);
 }
 
@@ -174,6 +177,8 @@ pics.forEach(pic => {
   img.className = "fall";
   img.style.left = Math.random() * 100 + "vw";
   img.style.animationDuration = (18 + Math.random() * 10) + "s";
+  img.style.width = 50 + Math.random() * 50 + "px";
+  img.style.opacity = 0.4 + Math.random() * 0.4;
   document.body.appendChild(img);
 });
 </script>
