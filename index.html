@@ -146,15 +146,20 @@ let isMoving = false;
 
 /* Place NO neatly beside YES */
 window.onload = () => {
-  const yes = document.getElementById("yes");
-  const yesRect = yes.getBoundingClientRect();
-  const containerRect = document
-    .getElementById("content")
-    .getBoundingClientRect();
+  const yesBtn = document.getElementById("yes");
+  const container = document.getElementById("content");
 
-  noBtn.style.left = (yesRect.right - containerRect.left + 20) + "px";
-  noBtn.style.top = (yesRect.top - containerRect.top) + "px";
+  const yesRect = yesBtn.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+
+  // Place NO exactly to the right of YES, aligned vertically
+  noBtn.style.left =
+    yesRect.right - containerRect.left + 20 + "px";
+
+  noBtn.style.top =
+    yesRect.top - containerRect.top + "px";
 };
+
 
 /* Move NO playfully */
 function moveNo() {
@@ -236,3 +241,4 @@ function yesClicked(e) {
 
 </body>
 </html>
+
