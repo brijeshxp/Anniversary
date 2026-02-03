@@ -2,39 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Brijesh ❤️ Kajal | Anniversary</title>
+  <title>Brijesh ❤️ Kajal | 11·02</title>
 
   <style>
     body {
-      height: 100vh;
       margin: 0;
+      height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-family: Arial, sans-serif;
-      background: #ffe6eb;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ffe6eb, #fff);
       overflow: hidden;
     }
 
-    .box {
+    .container {
       text-align: center;
       padding: 20px;
+      max-width: 90%;
     }
 
     h1 {
       color: #d6336c;
-    }
-
-    h2 {
-      color: #555;
+      font-weight: normal;
     }
 
     button {
-      padding: 12px 26px;
+      padding: 12px 28px;
       font-size: 16px;
-      margin: 12px;
+      margin: 15px;
+      border-radius: 25px;
       border: none;
-      border-radius: 8px;
       cursor: pointer;
     }
 
@@ -44,45 +42,65 @@
     }
 
     #no {
-      position: absolute;
-      background: #999;
+      background: #aaa;
       color: white;
+      position: absolute;
+    }
+
+    img {
+      max-width: 320px;
+      width: 90%;
+      border-radius: 16px;
+      margin-top: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 1s ease;
+    }
+
+    .show img {
+      opacity: 1;
+      transform: scale(1);
     }
   </style>
 </head>
 
 <body>
 
-  <div class="box">
-    <h1>Brijesh ❤️ Kajal</h1>
-    <h2>11 · 02 · Anniversary</h2>
-    <h2>Will you be my forever partner? 💍</h2>
+  <div class="container" id="content">
+    <h1>If we met again on 11·02…</h1>
+    <h1>would you still choose me?</h1>
 
-    <button id="yes" onclick="yesClicked()">Yes</button>
+    <button id="yes" onclick="showLove()">Yes</button>
     <button id="no" onmouseover="moveNo()">No</button>
   </div>
 
   <script>
     function moveNo() {
       const btn = document.getElementById("no");
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 60);
       btn.style.left = x + "px";
       btn.style.top = y + "px";
     }
 
-    function yesClicked() {
-      document.body.innerHTML = `
-        <div style="text-align:center;">
-          <h1>Best decision ever ❤️</h1>
-          <h2>Happy Anniversary Kajal</h2>
-          <h3>11 · 02 · Always & Forever</h3>
-          <p style="font-size:18px;">Love you endlessly 💖<br>— Brijesh</p>
+    function showLove() {
+      document.getElementById("content").innerHTML = `
+        <h1>In every version of my life…</h1>
+        <h1>it’s you ❤️</h1>
+
+        <div class="show">
+          <img src="us.jpg" alt="Brijesh & Kajal">
         </div>
+
+        <p style="margin-top:20px; font-size:17px;">
+          Happy Anniversary Kajal<br>
+          11 · 02 · Always<br><br>
+          — Brijesh
+        </p>
       `;
     }
   </script>
 
 </body>
 </html>
-
