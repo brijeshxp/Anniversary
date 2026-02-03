@@ -204,15 +204,20 @@ function yesClicked(e) {
 
     const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
 
-    pics.forEach(pic => {
-      const img = document.createElement("img");
-      img.src = pic;
-      img.className = "fall";
-      img.style.left = Math.random() * 100 + "vw";
-      img.style.animationDuration = (16 + Math.random() * 8) + "s";
-      img.style.width = (250 + Math.random() * 200) + "px";
-      document.body.appendChild(img);
-    });
+  pics.forEach(pic => {
+  const img = document.createElement("img");
+  img.src = pic;
+  img.className = "fall";
+
+  img.style.left = Math.random() * 90 + 5 + "vw";
+  img.style.animationDuration = (16 + Math.random() * 8) + "s";
+  img.style.animationDelay = Math.random() * 8 + "s";
+  img.style.width = (180 + Math.random() * 150) + "px";
+  img.style.zIndex = Math.floor(Math.random() * 3) + 1;
+
+  document.body.appendChild(img);
+});
+
 
     for (let i = 0; i < 6; i++) {
       const heart = document.createElement("div");
@@ -247,6 +252,7 @@ window.onload = () => {
 
 </body>
 </html>
+
 
 
 
