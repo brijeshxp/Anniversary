@@ -68,7 +68,6 @@ button {
 .heart {
   position: absolute;
   bottom: -20px;
-  font-size: 18px;
   opacity: 0.25;
   animation: floatUp linear infinite;
 }
@@ -79,16 +78,13 @@ button {
 
 .fall {
   position: absolute;
-  top: -120px;
-  width: 70px;
+  top: -140px;
   opacity: 0.5;
-  animation-name: fallDown;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  animation: fallDown linear infinite;
 }
 
 @keyframes fallDown {
-  to { transform: translateY(130vh) rotate(360deg); opacity: 0; }
+  to { transform: translateY(140vh) rotate(360deg); opacity: 0; }
 }
 </style>
 </head>
@@ -111,10 +107,11 @@ function moveNo() {
 }
 
 function yesClicked() {
-  document.getElementById("content").style.opacity = "0";
+  const content = document.getElementById("content");
+  content.style.opacity = "0";
 
   setTimeout(() => {
-    document.getElementById("content").innerHTML = `
+    content.innerHTML = `
       <div class="reveal show">
         <h1>In every version of my life…</h1>
         <h2>it’s you ❤️</h2>
@@ -132,33 +129,38 @@ function yesClicked() {
         </p>
       </div>
     `;
-    document.getElementById("content").style.opacity = "1";
+    content.style.opacity = "1";
 
     setTimeout(() => {
       document.getElementById("lateLine").style.opacity = "1";
     }, 3000);
 
-    // ---------- FALLING PHOTOS ----------
+    // 🌸 FALLING PHOTOS
     const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg"];
+
     pics.forEach(pic => {
       const img = document.createElement("img");
       img.src = pic;
       img.className = "fall";
+
       img.style.left = Math.random() * 100 + "vw";
-      img.style.animationDuration = (18 + Math.random() * 10) + "s";
-      img.style.width = 50 + Math.random() * 50 + "px";
-      img.style.opacity = 0.4 + Math.random() * 0.4;
+      img.style.animationDuration = (16 + Math.random() * 8) + "s";
+
+      const size = 120 + Math.random() * 120; // BIGGER photos
+      img.style.width = size + "px";
+
+      img.style.opacity = 0.45 + Math.random() * 0.4;
       document.body.appendChild(img);
     });
 
-    // ---------- HEARTS ----------
-    for (let i = 0; i < 5; i++) {
+    // ❤️ FLOATING HEARTS
+    for (let i = 0; i < 6; i++) {
       const heart = document.createElement("div");
       heart.className = "heart";
       heart.innerHTML = "❤️";
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = (8 + Math.random() * 6) + "s";
-      heart.style.fontSize = (12 + Math.random() * 12) + "px";
+      heart.style.fontSize = (14 + Math.random() * 14) + "px";
       document.body.appendChild(heart);
     }
 
@@ -168,6 +170,3 @@ function yesClicked() {
 
 </body>
 </html>
-
-
-
