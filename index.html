@@ -8,7 +8,7 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #ffe6eb, #ffffff);
+  background: linear-gradient(135deg, #f3f4ff, #fff6ef);
   font-family: Arial, sans-serif;
   overflow: hidden;
   opacity: 0;
@@ -18,30 +18,41 @@ body {
 @keyframes fadeIn { to { opacity: 1; } }
 
 .container {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
   text-align: center;
   padding: 20px;
 }
 
+h1, h2, h3 {
+  margin: 10px 0;
+}
+
 button {
-  padding: 12px 30px;
+  padding: 14px 34px;
   font-size: 16px;
-  border-radius: 30px;
+  border-radius: 40px;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: all 0.25s ease;
+  margin: 18px 12px 0;
 }
 
 #yes {
-  background: #ff4d6d;
+  background: linear-gradient(135deg, #ff758f, #ff4d6d);
   color: white;
+  box-shadow: 0 10px 25px rgba(255,77,109,0.35);
 }
 
-#yes:hover { transform: scale(1.08); }
+#yes:hover {
+  transform: scale(1.12);
+}
 
 #no {
-  background: #aaa;
+  background: #b0b0b0;
   color: white;
   position: absolute;
 }
@@ -79,12 +90,29 @@ button {
 .fall {
   position: absolute;
   top: -140px;
-  opacity: 0.5;
+  opacity: 0.45;
   animation: fallDown linear infinite;
+  filter: blur(0.6px);
+  border-radius: 14px;
 }
 
 @keyframes fallDown {
   to { transform: translateY(140vh) rotate(360deg); opacity: 0; }
+}
+
+/* ✨ Sparkles */
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 14px;
+  animation: sparkle 1s ease forwards;
+}
+
+@keyframes sparkle {
+  to {
+    transform: translateY(-40px) scale(0);
+    opacity: 0;
+  }
 }
 </style>
 </head>
@@ -96,9 +124,11 @@ button {
   <h2>It was a choice.</h2>
   <h3>Will you choose me again?</h3>
 
-  <button id="yes" onclick="yesClicked()">Yes</button>
+  <button id="yes" onclick="yesClicked(event)">Yes</button>
   <button id="no" onmouseover="moveNo()">No</button>
 </div>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
 
 <script>
 function moveNo() {
@@ -107,7 +137,24 @@ function moveNo() {
   btn.style.top = Math.random() * (window.innerHeight - 60) + "px";
 }
 
-function yesClicked() {
+function sparkle(x, y) {
+  for (let i = 0; i < 10; i++) {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.innerHTML = "✨";
+    s.style.left = x + Math.random() * 40 - 20 + "px";
+    s.style.top = y + Math.random() * 40 - 20 + "px";
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1000);
+  }
+}
+
+function yesClicked(e) {
+  sparkle(e.clientX, e.clientY);
+  document.getElementById("bgMusic").play();
+  document.getElementById("yes").disabled = true;
+  document.getElementById("no").remove();
+
   const content = document.getElementById("content");
   content.style.opacity = "0";
 
@@ -136,25 +183,18 @@ function yesClicked() {
       document.getElementById("lateLine").style.opacity = "1";
     }, 3000);
 
-    // 🌸 FALLING PHOTOS
     const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
 
     pics.forEach(pic => {
       const img = document.createElement("img");
       img.src = pic;
       img.className = "fall";
-
       img.style.left = Math.random() * 100 + "vw";
       img.style.animationDuration = (16 + Math.random() * 8) + "s";
-
-      const size = 120 + Math.random() * 120; // BIGGER photos
-      img.style.width = size + "px";
-
-      img.style.opacity = 0.45 + Math.random() * 0.4;
+      img.style.width = (120 + Math.random() * 120) + "px";
       document.body.appendChild(img);
     });
 
-    // ❤️ FLOATING HEARTS
     for (let i = 0; i < 6; i++) {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -171,4 +211,3 @@ function yesClicked() {
 
 </body>
 </html>
-
