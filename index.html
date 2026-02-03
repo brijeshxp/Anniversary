@@ -8,12 +8,7 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(
-    135deg,
-    #fafcff,
-    #f6fff8,
-    #fff7f0
-  );
+  background: linear-gradient(135deg, #fafcff, #f6fff8, #fff7f0);
   font-family: Arial, sans-serif;
   overflow: hidden;
   opacity: 0;
@@ -57,12 +52,12 @@ button {
   transform: scale(1.12);
 }
 
-/* 🏃 NO runs away but stays visible */
+/* 🏃 NO button — always visible, runs away */
 #no {
   background: #b0b0b0;
   color: white;
-  position: absolute;
-  transition: left 0.25s ease, top 0.25s ease;
+  position: fixed; /* IMPORTANT */
+  transition: left 0.18s ease, top 0.18s ease;
 }
 
 .reveal {
@@ -132,22 +127,30 @@ button {
   <h2>It was a choice.</h2>
   <h3>Will you choose me again?</h3>
 
-  <button id="yes" aria-label="Yes, I choose you" onclick="yesClicked(event)">Yes</button>
-  <button id="no" aria-label="No" onmouseover="moveNo()">No</button>
+  <button id="yes" onclick="yesClicked(event)">Yes</button>
+  <button id="no">No</button>
 </div>
 
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <script>
-function moveNo() {
-  const btn = document.getElementById("no");
-  const padding = 20;
-  const maxX = window.innerWidth - btn.offsetWidth - padding;
-  const maxY = window.innerHeight - btn.offsetHeight - padding;
+const noBtn = document.getElementById("no");
 
-  btn.style.left = Math.random() * maxX + "px";
-  btn.style.top = Math.random() * maxY + "px";
+/* Move NO only when user tries to interact */
+function moveNo() {
+  const padding = 20;
+  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
 }
+
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("mousedown", moveNo);
 
 function sparkle(x, y) {
   for (let i = 0; i < 10; i++) {
@@ -169,7 +172,7 @@ function yesClicked(e) {
   music.play().catch(() => {});
 
   document.getElementById("yes").disabled = true;
-  document.getElementById("no").remove();
+  noBtn.remove();
 
   const content = document.getElementById("content");
   content.style.opacity = "0";
@@ -224,11 +227,12 @@ function yesClicked(e) {
   }, 700);
 }
 
-/* Start NO button near YES */
+/* Place NO initially next to YES */
 window.onload = () => {
-  const no = document.getElementById("no");
-  no.style.left = "55%";
-  no.style.top = "60%";
+  const yes = document.getElementById("yes");
+  const rect = yes.getBoundingClientRect();
+  noBtn.style.left = rect.right + 20 + "px";
+  noBtn.style.top = rect.top + "px";
 };
 </script>
 
