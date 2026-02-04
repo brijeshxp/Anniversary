@@ -22,9 +22,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
   text-align: center;
   padding: 20px;
+  z-index: 2;
 }
 
 button {
@@ -33,84 +33,74 @@ button {
   border-radius: 40px;
   border: none;
   cursor: pointer;
-  transition: all 0.25s ease;
-  margin: 18px 12px 0;
+  margin-top: 18px;
 }
 
+/* YES */
 #yes {
   background: linear-gradient(135deg, #9be7c4, #4fd1a5);
   color: #0f5132;
   box-shadow: 0 10px 25px rgba(79,209,165,0.45);
 }
+#yes:hover { transform: scale(1.1); }
 
-#yes:hover { transform: scale(1.12); }
-
+/* NO */
 #no {
-  background: #b0b0b0;
+  background: #aaa;
   color: white;
   position: fixed;
 }
 
+/* REVEAL */
 .reveal {
-  opacity: 0;
-  transform: scale(0.96);
-  transition: all 1.2s ease;
+  animation: fadeIn 1.2s ease forwards;
 }
 
-.reveal.show {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* 🔁 SLIDESHOW */
+/* SLIDESHOW */
 .slideshow {
   position: relative;
-  background: transparent;
-  width: 90vw;
-  max-width: 520px;
-  height: 60vh;
-  max-height: 420px;
   margin: 20px auto;
-  overflow: hidden;
-  border-radius: 18px;
-  box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+  max-width: 90vw;
+  max-height: 70vh;
 }
 
 .slideshow img {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90vw;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.28);
   opacity: 0;
   transition: opacity 1.2s ease;
+  background: transparent;
 }
 
 .slideshow img.active {
   opacity: 1;
 }
 
+/* MOBILE */
+@media (max-width: 600px) {
+  .slideshow img {
+    max-height: 60vh;
+  }
+}
+
+/* HEARTS */
 .heart {
   position: absolute;
   bottom: -20px;
-  opacity: 0.25;
+  opacity: 0.3;
   animation: floatUp linear infinite;
 }
 
 @keyframes floatUp {
   to { transform: translateY(-120vh); opacity: 0; }
-}
-
-.fall {
-  position: absolute;
-  top: -140px;
-  opacity: 0.6;
-  animation: fallDown 12s linear infinite;
-  border-radius: 14px;
-}
-
-@keyframes fallDown {
-  to { transform: translateY(140vh); opacity: 0; }
 }
 </style>
 </head>
@@ -130,74 +120,69 @@ button {
 
 <script>
 const noBtn = document.getElementById("no");
-noBtn.onmouseenter = () => {
-  noBtn.style.left = Math.random() * 80 + "vw";
-  noBtn.style.top = Math.random() * 80 + "vh";
-};
+
+function moveNo() {
+  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+}
+noBtn.addEventListener("mouseenter", moveNo);
 
 function yesClicked() {
   document.getElementById("bgMusic").play().catch(()=>{});
   noBtn.remove();
 
   const content = document.getElementById("content");
-  content.style.opacity = "0";
+  content.innerHTML = `
+    <div class="reveal">
+      <h1>In every version of my life…</h1>
+      <h2>it’s you ❤️</h2>
 
-  setTimeout(() => {
-    content.innerHTML = `
-      <div class="reveal show">
-        <h1>In every version of my life…</h1>
-        <h2>it’s you 💚</h2>
-
-        <div class="slideshow">
-          <img src="S1.jpg" class="active">
-          <img src="S2.jpg">
-          <img src="S3.jpg">
-          <img src="S4.jpg">
-        </div>
-
-        <p style="font-size:30px;">
-          Happy Anniversary Kajal<br>
-          11 • 02 • & Forever<br><br>
-          — Brijesh
-        </p>
+      <div class="slideshow">
+        <img src="S1.jpg" class="active">
+        <img src="S2.jpg">
+        <img src="S3.jpg">
+        <img src="S4.jpg">
       </div>
-    `;
-    content.style.opacity = "1";
 
-    startSlideshow();
+      <p style="font-size:22px;margin-top:18px;">
+        Happy Anniversary Kajal<br>
+        11 • 02 • Always<br><br>
+        — Brijesh
+      </p>
 
-    const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
-    pics.forEach(p => {
-      const i = document.createElement("img");
-      i.src = p;
-      i.className = "fall";
-      i.style.left = Math.random()*90+"vw";
-      i.style.width = 180+Math.random()*120+"px";
-      document.body.appendChild(i);
-    });
+      <p style="opacity:0; animation: fadeIn 1s ease forwards; animation-delay:3s;">
+        And I’d still choose you… every single time.
+      </p>
+    </div>
+  `;
 
-    for(let i=0;i<6;i++){
-      const h=document.createElement("div");
-      h.className="heart";
-      h.innerHTML="❤️";
-      h.style.left=Math.random()*100+"vw";
-      h.style.animationDuration=8+Math.random()*6+"s";
-      document.body.appendChild(h);
-    }
-  },700);
+  startSlideshow();
+  hearts();
 }
 
 function startSlideshow() {
   const slides = document.querySelectorAll(".slideshow img");
-  let i = 0;
+  let index = 0;
+
   setInterval(() => {
-    slides[i].classList.remove("active");
-    i = (i + 1) % slides.length;
-    slides[i].classList.add("active");
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
   }, 3500);
+}
+
+function hearts() {
+  for (let i = 0; i < 8; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDuration = (8 + Math.random()*6) + "s";
+    h.style.fontSize = (16 + Math.random()*14) + "px";
+    document.body.appendChild(h);
+  }
 }
 </script>
 
 </body>
 </html>
-
