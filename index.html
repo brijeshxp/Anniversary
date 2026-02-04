@@ -12,7 +12,6 @@ body {
   background: linear-gradient(120deg, #fafcff, #f6fff8, #fff7f0);
   font-family: Arial, sans-serif;
   overflow-x: hidden;
-  overflow-y: auto;
   opacity: 0;
   animation: fadeIn 1.2s ease forwards;
 }
@@ -20,16 +19,23 @@ body {
 @keyframes fadeIn { to { opacity: 1; } }
 
 /* ---------- LAYERS ---------- */
-.layer-fall { z-index: 1; }
-.layer-hearts { z-index: 2; }
+.layer-fall { z-index: 1; position: fixed; inset: 0; }
+.layer-hearts { z-index: 2; position: fixed; inset: 0; }
 .layer-content { z-index: 5; position: relative; }
 
-/* ---------- CONTAINER ---------- */
+/* ---------- FIRST SCREEN CENTER ---------- */
 .container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;      /* vertical center */
+  justify-content: center;  /* horizontal center */
   text-align: center;
-  padding: 40px 20px 80px;
-  max-width: 95vw;
-  margin: auto;
+  padding: 20px;
+}
+
+.inner {
+  max-width: 700px;
+  width: 100%;
 }
 
 h1, h2, h3 { margin: 10px 0; }
@@ -71,18 +77,19 @@ button {
   transform: scale(1);
 }
 
-/* ---------- SLIDESHOW (NORMAL FLOW, NOT ABSOLUTE) ---------- */
+/* ---------- SLIDESHOW (CENTERED & CONTROLLED) ---------- */
 .slideshow {
   margin: 30px auto;
-  max-width: 90vw;
+  max-width: 520px;   /* 👈 desktop control */
+  width: 100%;
 }
 
 .slideshow img {
   display: none;
-  max-width: 90vw;
-  max-height: 70vh;
-  width: auto;
+  width: 100%;
   height: auto;
+  max-height: 60vh;
+  object-fit: contain;
   border-radius: 18px;
   box-shadow: 0 14px 40px rgba(0,0,0,0.28);
 }
@@ -118,14 +125,14 @@ button {
 }
 
 @keyframes floatUp {
-  to {
-    transform: translateY(-120vh);
-    opacity: 0;
-  }
+  to { transform: translateY(-120vh); opacity: 0; }
 }
 
 /* ---------- MOBILE ---------- */
 @media (max-width: 600px) {
+  .slideshow {
+    max-width: 90vw;
+  }
   .slideshow img {
     max-height: 60vh;
   }
@@ -135,20 +142,18 @@ button {
 
 <body>
 
-<!-- FALLING LAYER -->
 <div class="layer-fall" id="fallLayer"></div>
-
-<!-- HEART LAYER -->
 <div class="layer-hearts" id="heartLayer"></div>
 
-<!-- CONTENT -->
 <div class="container layer-content" id="content">
-  <h1>Hey Kajal, 11 February wasn’t just a date.</h1>
-  <h2>It was a choice.</h2>
-  <h3>Will you choose me again?</h3>
+  <div class="inner">
+    <h1>Hey Kajal, 11 February wasn’t just a date.</h1>
+    <h2>It was a choice.</h2>
+    <h3>Will you choose me again?</h3>
 
-  <button id="yes" onclick="yesClicked()">Yes</button>
-  <button id="no">No</button>
+    <button id="yes" onclick="yesClicked()">Yes</button>
+    <button id="no">No</button>
+  </div>
 </div>
 
 <audio id="bgMusic" src="music.mp3" loop></audio>
@@ -156,7 +161,6 @@ button {
 <script>
 const noBtn = document.getElementById("no");
 
-/* NO button escape */
 function moveNo() {
   const x = Math.random() * (window.innerWidth - 120);
   const y = Math.random() * (window.innerHeight - 60);
@@ -167,7 +171,6 @@ function moveNo() {
 noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("mousedown", moveNo);
 
-/* YES CLICK */
 function yesClicked() {
   document.getElementById("bgMusic").play().catch(() => {});
   noBtn.remove();
@@ -177,7 +180,7 @@ function yesClicked() {
 
   setTimeout(() => {
     content.innerHTML = `
-      <div class="reveal show">
+      <div class="inner reveal show">
         <h1>In every version of my life…</h1>
         <h2>it’s you 💚</h2>
 
@@ -188,7 +191,7 @@ function yesClicked() {
           <img src="S4.jpg">
         </div>
 
-        <p style="margin-top:24px;font-size:22px;">
+        <p style="margin-top:22px;font-size:20px;">
           Happy Anniversary Kajal<br>
           11 • 02 • Always<br><br>
           — Brijesh
@@ -205,7 +208,6 @@ function yesClicked() {
   }, 600);
 }
 
-/* SLIDESHOW */
 function startSlideshow() {
   const slides = document.querySelectorAll(".slideshow img");
   let i = 0;
@@ -216,27 +218,21 @@ function startSlideshow() {
   }, 3500);
 }
 
-/* FALLING PHOTOS (P1–P11) */
 function startFalling() {
-  const fallLayer = document.getElementById("fallLayer");
   const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
-
   pics.forEach(pic => {
     const img = document.createElement("img");
     img.src = pic;
     img.className = "fall";
     img.style.left = Math.random() * 90 + 5 + "vw";
-    img.style.width = (200 + Math.random() * 160) + "px";
+    img.style.width = (160 + Math.random() * 120) + "px";
     img.style.animationDuration = (10 + Math.random() * 8) + "s";
     img.style.animationDelay = Math.random() * 5 + "s";
-    fallLayer.appendChild(img);
+    document.getElementById("fallLayer").appendChild(img);
   });
 }
 
-/* HEARTS */
 function startHearts() {
-  const heartLayer = document.getElementById("heartLayer");
-
   for (let i = 0; i < 6; i++) {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -244,7 +240,7 @@ function startHearts() {
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.fontSize = (14 + Math.random() * 14) + "px";
     heart.style.animationDuration = (8 + Math.random() * 6) + "s";
-    heartLayer.appendChild(heart);
+    document.getElementById("heartLayer").appendChild(heart);
   }
 }
 </script>
