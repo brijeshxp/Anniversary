@@ -100,6 +100,31 @@ button {
   display: inline-block;
   margin: 10px 0;
 }
+/* ---------------- Heartbeat + Glow Anniversary Text ---------------- */
+.heartbeat-text {
+  font-family: 'Cinzel', serif;       /* elegant wedding-ring engraving font */
+  font-size: 32px;                     /* big enough to stand out */
+  font-weight: 600;
+  font-style: italic;
+  color: #7a1c2d;                      /* deep ruby red */
+  display: inline-block;                /* required for transform scaling */
+  line-height: 1.2;                     /* spacing for multi-line */
+  margin: 10px 0;
+
+  /* Heartbeat + Glow Animation */
+  animation: heartbeatGlow 1.8s infinite;
+  position: relative;
+  text-align: center;
+}
+
+/* Heartbeat + Glow Animation */
+@keyframes heartbeatGlow {
+  0%, 100%   { transform: scale(1); text-shadow: 0 0 5px #ffccd5, 0 0 10px #ff99aa, 0 0 15px #ff6677; }
+  14%        { transform: scale(1.12); text-shadow: 0 0 15px #ffccd5, 0 0 25px #ff99aa, 0 0 35px #ff6677; }
+  28%        { transform: scale(1); text-shadow: 0 0 8px #ffccd5, 0 0 15px #ff99aa, 0 0 20px #ff6677; }
+  42%        { transform: scale(1.08); text-shadow: 0 0 12px #ffccd5, 0 0 20px #ff99aa, 0 0 30px #ff6677; }
+  70%        { transform: scale(1); text-shadow: 0 0 5px #ffccd5, 0 0 10px #ff99aa, 0 0 15px #ff6677; }
+}
 
 .ring {
   position: absolute;
@@ -289,6 +314,7 @@ yesBtn.onclick = () => {
 
 </body>
 </html>
+
 
 
 
