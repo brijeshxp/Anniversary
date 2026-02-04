@@ -2,139 +2,167 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Brijesh ❤️ Kajal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Slideshow</title>
 
 <style>
-/* ---------- BASE ---------- */
-body {
+* {
   margin: 0;
-  min-height: 100vh;
-  background: linear-gradient(120deg, #fafcff, #f6fff8, #fff7f0);
+  padding: 0;
+  box-sizing: border-box;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
-  opacity: 0;
-  animation: fadeIn 1.2s ease forwards;
 }
 
-@keyframes fadeIn { to { opacity: 1; } }
-
-/* ---------- LAYERS ---------- */
-.layer-fall { z-index: 1; position: fixed; inset: 0; }
-.layer-hearts { z-index: 2; position: fixed; inset: 0; }
-.layer-content { z-index: 5; position: relative; }
-
-/* ---------- FIRST SCREEN CENTER ---------- */
-.container {
+/* ---------- HERO SECTION ---------- */
+.hero {
+  position: relative;
   min-height: 100vh;
-  display: flex;
-  align-items: center;      /* vertical center */
-  justify-content: center;  /* horizontal center */
-  text-align: center;
-  padding: 20px;
+  overflow: hidden;
+  background: #000;
 }
 
-.inner {
-  max-width: 700px;
-  width: 100%;
-}
-
-h1, h2, h3 { margin: 10px 0; }
-
-/* ---------- BUTTONS ---------- */
-button {
-  padding: 14px 34px;
-  font-size: 16px;
-  border-radius: 40px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  margin: 18px 12px 0;
-}
-
-#yes {
-  background: linear-gradient(135deg, #9be7c4, #4fd1a5);
-  color: #0f5132;
-  box-shadow: 0 10px 25px rgba(79,209,165,0.45);
-}
-
-#yes:hover { transform: scale(1.12); }
-
-#no {
-  background: #b0b0b0;
-  color: white;
-  position: fixed;
-}
-
-/* ---------- REVEAL ---------- */
-.reveal {
-  opacity: 0;
-  transform: scale(0.96);
-  transition: all 1.2s ease;
-}
-
-.reveal.show {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* ---------- SLIDESHOW (CENTERED & CONTROLLED) ---------- */
+/* slideshow */
 .slideshow {
-  margin: 30px auto;
-  max-width: 520px;   /* 👈 desktop control */
-  width: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .slideshow img {
-  display: none;
+  position: absolute;
   width: 100%;
-  height: auto;
-  max-height: 60vh;
-  object-fit: contain;
-  border-radius: 18px;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.28);
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: slide 16s infinite;
 }
 
-.slideshow img.active {
-  display: block;
+.slideshow img:nth-child(1) { animation-delay: 0s; }
+.slideshow img:nth-child(2) { animation-delay: 4s; }
+.slideshow img:nth-child(3) { animation-delay: 8s; }
+.slideshow img:nth-child(4) { animation-delay: 12s; }
+
+@keyframes slide {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  25% { opacity: 1; }
+  35% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
-/* ---------- FALLING PHOTOS ---------- */
-.fall {
-  position: fixed;
-  top: -160px;
-  opacity: 0.55;
-  animation: fallDown linear infinite;
-  border-radius: 14px;
+/* overlay */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 2;
+}
+
+/* hero text */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 600;
+}
+
+.hero-content p {
+  margin-top: 10px;
+  font-size: clamp(16px, 2vw, 22px);
+  opacity: 0.85;
+}
+
+/* ---------- FALLING IMAGES ---------- */
+.falling {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   pointer-events: none;
 }
 
-@keyframes fallDown {
-  to {
-    transform: translateY(160vh) rotate(8deg);
-    opacity: 0;
-  }
+.falling img {
+  position: absolute;
+  width: 80px;
+  animation: fall 10s linear infinite;
+  opacity: 0.8;
 }
 
-/* ---------- HEARTS ---------- */
-.heart {
-  position: fixed;
-  bottom: -20px;
-  opacity: 0.25;
-  animation: floatUp linear infinite;
-  pointer-events: none;
+.falling img:nth-child(1) { left: 10%; animation-delay: 0s; }
+.falling img:nth-child(2) { left: 30%; animation-delay: 2s; }
+.falling img:nth-child(3) { left: 55%; animation-delay: 4s; }
+.falling img:nth-child(4) { left: 75%; animation-delay: 6s; }
+
+@keyframes fall {
+  from { top: -100px; }
+  to { top: 110%; }
 }
 
-@keyframes floatUp {
-  to { transform: translateY(-120vh); opacity: 0; }
+/* ---------- CINEMATIC TEXT SECTION ---------- */
+.scene-text {
+  min-height: 100vh;
+  background: #0b0b0b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
 }
 
-/* ---------- MOBILE ---------- */
-@media (max-width: 600px) {
-  .slideshow {
-    max-width: 90vw;
-  }
+.scene-text h1,
+.scene-text h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid white;
+  opacity: 0;
+  margin: 10px 0;
+}
+
+.scene-text h1 {
+  font-size: clamp(28px, 4vw, 52px);
+}
+
+.scene-text h2 {
+  font-size: clamp(20px, 3vw, 36px);
+  color: #ccc;
+}
+
+/* typing animation */
+.type-animate {
+  animation: typing 2.8s steps(30,end) forwards,
+             blink 0.7s infinite;
+}
+
+.delay {
+  animation-delay: 3s;
+}
+
+@keyframes typing {
+  from { width: 0; opacity: 1; }
+  to { width: 100%; opacity: 1; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* ---------- RESPONSIVE FIX ---------- */
+@media (min-width: 1024px) {
   .slideshow img {
-    max-height: 60vh;
+    object-position: center;
   }
 }
 </style>
@@ -142,109 +170,49 @@ button {
 
 <body>
 
-<div class="layer-fall" id="fallLayer"></div>
-<div class="layer-hearts" id="heartLayer"></div>
+<!-- HERO -->
+<section class="hero">
 
-<div class="container layer-content" id="content">
-  <div class="inner">
-    <h1>Hey Kajal, 11 February isn't just a date.</h1>
-    <h2>It is a choice.</h2>
-    <h3>Will you choose me again?</h3>
-
-    <button id="yes" onclick="yesClicked()">Yes</button>
-    <button id="no">No</button>
+  <div class="slideshow">
+    <img src="s1.jpg">
+    <img src="s2.jpg">
+    <img src="s3.jpg">
+    <img src="s4.jpg">
   </div>
-</div>
 
-<audio id="bgMusic" src="music.mp3" loop></audio>
+  <div class="falling">
+    <img src="p1.png">
+    <img src="p2.png">
+    <img src="p3.png">
+    <img src="p4.png">
+  </div>
+
+  <div class="hero-content">
+    <h1>Your Brand Name</h1>
+    <p>Architecture • Interiors • Experiences</p>
+  </div>
+
+</section>
+
+<!-- CINEMATIC NEXT SCREEN -->
+<section class="scene-text">
+  <h1 class="typewriter">We don’t just design spaces.</h1>
+  <h2 class="typewriter delay">We design experiences.</h2>
+</section>
 
 <script>
-const noBtn = document.getElementById("no");
-
-function moveNo() {
-  const x = Math.random() * (window.innerWidth - 120);
-  const y = Math.random() * (window.innerHeight - 60);
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-}
-
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("mousedown", moveNo);
-
-function yesClicked() {
-  document.getElementById("bgMusic").play().catch(() => {});
-  noBtn.remove();
-
-  const content = document.getElementById("content");
-  content.style.opacity = "0";
-
-  setTimeout(() => {
-    content.innerHTML = `
-      <div class="inner reveal show">
-        <h1>In every version of my life…</h1>
-        <h2>it’s you 💚</h2>
-
-        <div class="slideshow">
-          <img src="S1.jpg" class="active">
-          <img src="S2.jpg">
-          <img src="S3.jpg">
-          <img src="S4.jpg">
-        </div>
-
-        <p style="margin-top:22px;font-size:26px;">
-          Happy Anniversary Kajal<br>
-          11 • 02 • & Forever...<br><br>
-          — Brijesh
-        </p>
-
-        <p>And I’d still choose you… every single time.</p>
-      </div>
-    `;
-    content.style.opacity = "1";
-
-    startSlideshow();
-    startFalling();
-    startHearts();
-  }, 600);
-}
-
-function startSlideshow() {
-  const slides = document.querySelectorAll(".slideshow img");
-  let i = 0;
-  setInterval(() => {
-    slides[i].classList.remove("active");
-    i = (i + 1) % slides.length;
-    slides[i].classList.add("active");
-  }, 3500);
-}
-
-function startFalling() {
-  const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
-  pics.forEach(pic => {
-    const img = document.createElement("img");
-    img.src = pic;
-    img.className = "fall";
-    img.style.left = Math.random() * 90 + 5 + "vw";
-    img.style.width = (160 + Math.random() * 120) + "px";
-    img.style.animationDuration = (10 + Math.random() * 8) + "s";
-    img.style.animationDelay = Math.random() * 5 + "s";
-    document.getElementById("fallLayer").appendChild(img);
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.typewriter')
+        .forEach(el => el.classList.add('type-animate'));
+      observer.unobserve(entry.target);
+    }
   });
-}
+},{ threshold: 0.6 });
 
-function startHearts() {
-  for (let i = 0; i < 6; i++) {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (14 + Math.random() * 14) + "px";
-    heart.style.animationDuration = (8 + Math.random() * 6) + "s";
-    document.getElementById("heartLayer").appendChild(heart);
-  }
-}
+observer.observe(document.querySelector('.scene-text'));
 </script>
 
 </body>
 </html>
-
