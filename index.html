@@ -5,7 +5,6 @@
 <title>Brijesh ❤️ Kajal</title>
 
 <style>
-/* ---------- BASE ---------- */
 body {
   margin: 0;
   height: 100vh;
@@ -19,19 +18,19 @@ body {
 @keyframes fadeIn { to { opacity: 1; } }
 
 .container {
-  position: relative;
-  z-index: 5;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
   text-align: center;
   padding: 20px;
-  max-width: 95vw;
-  margin: auto;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
-h1, h2, h3 { margin: 10px 0; }
+h1, h2, h3 {
+  margin: 10px 0;
+}
 
-/* ---------- BUTTONS ---------- */
 button {
   padding: 14px 34px;
   font-size: 16px;
@@ -42,21 +41,25 @@ button {
   margin: 18px 12px 0;
 }
 
+/* 💚 YES = GREEN FLAG */
 #yes {
   background: linear-gradient(135deg, #9be7c4, #4fd1a5);
   color: #0f5132;
   box-shadow: 0 10px 25px rgba(79,209,165,0.45);
 }
 
-#yes:hover { transform: scale(1.12); }
+#yes:hover {
+  transform: scale(1.12);
+}
 
+/* 🏃 NO button — always visible, runs away */
 #no {
   background: #b0b0b0;
   color: white;
-  position: fixed;
+  position: fixed; /* IMPORTANT */
+  transition: left 0.18s ease, top 0.18s ease;
 }
 
-/* ---------- REVEAL ---------- */
 .reveal {
   opacity: 0;
   transform: scale(0.96);
@@ -68,47 +71,25 @@ button {
   transform: scale(1);
 }
 
-/* ---------- SLIDESHOW ---------- */
-.slideshow {
-  margin: 22px auto;
-  max-width: 90vw;
-  max-height: 70vh;
-}
-
-.slideshow img {
-  display: none;
-  max-width: 90vw;
-  max-height: 70vh;
+.reveal img {
+  max-width: 90vw;      /* desktop control */
+  max-height: 55vh;     /* 🔥 key for horizontal images */
   width: auto;
   height: auto;
   border-radius: 18px;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.28);
+  margin-top: 20px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+}
+/* ---------- PHONE OVERRIDE ---------- */
+@media (max-width: 600px) {
+  .reveal img {
+    max-height: 65vh;
+  }
 }
 
-.slideshow img.active {
-  display: block;
-}
-
-/* ---------- FALLING PHOTOS ---------- */
-.fall {
-  position: fixed;
-  top: -140px;
-  z-index: 1;
-  opacity: 0.55;
-  animation: fallDown linear infinite;
-  border-radius: 14px;
-  pointer-events: none;
-}
-
-@keyframes fallDown {
-  to { transform: translateY(140vh); opacity: 0; }
-}
-
-/* ---------- HEARTS ---------- */
 .heart {
-  position: fixed;
+  position: absolute;
   bottom: -20px;
-  z-index: 2;
   opacity: 0.25;
   animation: floatUp linear infinite;
 }
@@ -117,10 +98,31 @@ button {
   to { transform: translateY(-120vh); opacity: 0; }
 }
 
-/* ---------- MOBILE ---------- */
-@media (max-width: 600px) {
-  .slideshow img {
-    max-height: 60vh;
+.fall {
+  position: absolute;
+  top: -140px;
+  opacity: 0.60;
+  animation: fallDown 20s ease-in-out infinite;
+  filter: blur(0.6px);
+  border-radius: 14px;
+}
+
+@keyframes fallDown {
+  to { transform: translateY(140vh); opacity: 0; }
+}
+
+/* ✨ Sparkles */
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 14px;
+  animation: sparkle 1s ease forwards;
+}
+
+@keyframes sparkle {
+  to {
+    transform: translateY(-40px) scale(0);
+    opacity: 0;
   }
 }
 </style>
@@ -133,7 +135,7 @@ button {
   <h2>It was a choice.</h2>
   <h3>Will you choose me again?</h3>
 
-  <button id="yes" onclick="yesClicked()">Yes</button>
+  <button id="yes" onclick="yesClicked(event)">Yes</button>
   <button id="no">No</button>
 </div>
 
@@ -142,10 +144,15 @@ button {
 <script>
 const noBtn = document.getElementById("no");
 
-/* NO button escape */
+/* Move NO only when user tries to interact */
 function moveNo() {
-  const x = Math.random() * (window.innerWidth - 120);
-  const y = Math.random() * (window.innerHeight - 60);
+  const padding = 20;
+  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
 }
@@ -153,12 +160,26 @@ function moveNo() {
 noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("mousedown", moveNo);
 
-/* YES clicked */
-function yesClicked() {
+function sparkle(x, y) {
+  for (let i = 0; i < 10; i++) {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.innerHTML = "✨";
+    s.style.left = x + Math.random() * 40 - 20 + "px";
+    s.style.top = y + Math.random() * 40 - 20 + "px";
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1000);
+  }
+}
+
+function yesClicked(e) {
+  sparkle(e.clientX, e.clientY);
+
   const music = document.getElementById("bgMusic");
   music.volume = 0.6;
   music.play().catch(() => {});
 
+  document.getElementById("yes").disabled = true;
   noBtn.remove();
 
   const content = document.getElementById("content");
@@ -170,73 +191,73 @@ function yesClicked() {
         <h1>In every version of my life…</h1>
         <h2>it’s you 💚</h2>
 
-        <div class="slideshow">
-          <img src="S1.jpg" class="active">
-          <img src="S2.jpg">
-          <img src="S3.jpg">
-          <img src="S4.jpg">
-        </div>
+        <img src="US.jpeg">
 
-        <p style="margin-top:22px;font-size:22px;">
+        <p style="margin-top:20px;font-size:30px;">
           Happy Anniversary Kajal<br>
-          11 • 02 • Always<br><br>
+          11 • 02 • & Forever<br><br>
           — Brijesh
         </p>
 
-        <p style="margin-top:10px;">
+        <p id="lateLine" style="opacity:0; transition:1s; margin-top:12px;">
           And I’d still choose you… every single time.
         </p>
       </div>
     `;
     content.style.opacity = "1";
 
-    startSlideshow();
-    startFalling();
-    startHearts();
+    setTimeout(() => {
+      document.getElementById("lateLine").style.opacity = "1";
+    }, 3000);
+
+    const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
+
+  pics.forEach(pic => {
+  const img = document.createElement("img");
+  img.src = pic;
+  img.className = "fall";
+
+  img.style.left = Math.random() * 90 + 5 + "vw";
+  img.style.animationDuration = (8 + Math.random() * 6) + "s";
+  img.style.animationDelay = Math.random() * 6 + "s";
+  img.style.width = (240 + Math.random() * 180) + "px";
+  img.style.zIndex = Math.floor(Math.random() * 3) + 1;
+
+  document.body.appendChild(img);
+});
+
+
+    for (let i = 0; i < 6; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (8 + Math.random() * 6) + "s";
+      heart.style.fontSize = (14 + Math.random() * 14) + "px";
+      document.body.appendChild(heart);
+    }
+
   }, 700);
 }
 
-/* SLIDESHOW */
-function startSlideshow() {
-  const slides = document.querySelectorAll(".slideshow img");
-  let index = 0;
+/* Place NO initially next to YES */
+window.onload = () => {
+  const yesBtn = document.getElementById("yes");
+  const container = document.getElementById("content");
 
-  setInterval(() => {
-    slides[index].classList.remove("active");
-    index = (index + 1) % slides.length;
-    slides[index].classList.add("active");
-  }, 3500);
-}
+  const yesRect = yesBtn.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
 
-/* FALLING PHOTOS */
-function startFalling() {
-  const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
+  // Place NO exactly to the right of YES, aligned vertically
+  noBtn.style.left =
+    yesRect.right - containerRect.left + 20 + "px";
 
-  pics.forEach(pic => {
-    const img = document.createElement("img");
-    img.src = pic;
-    img.className = "fall";
-    img.style.left = Math.random() * 90 + 5 + "vw";
-    img.style.width = (200 + Math.random() * 180) + "px";
-    img.style.animationDuration = (10 + Math.random() * 8) + "s";
-    img.style.animationDelay = Math.random() * 5 + "s";
-    document.body.appendChild(img);
-  });
-}
+  noBtn.style.top =
+    yesRect.top - containerRect.top + "px";
+};
 
-/* HEARTS */
-function startHearts() {
-  for (let i = 0; i < 6; i++) {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (14 + Math.random() * 14) + "px";
-    heart.style.animationDuration = (8 + Math.random() * 6) + "s";
-    document.body.appendChild(heart);
-  }
-}
 </script>
 
 </body>
 </html>
+
