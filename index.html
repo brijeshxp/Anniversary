@@ -82,6 +82,12 @@ button {
   transition: opacity 1s ease;
   z-index: 3;
 }
+.heartbeat-text {
+  font-size: 28px;
+  margin: 8px 0;
+  animation: heartbeat 1.8s infinite;
+  display: inline-block; /* REQUIRED for transform */
+}
 
 /* typewriter */
 .type {
@@ -193,7 +199,7 @@ button {
     <img src="S4.jpg">
   </div>
 
-  <p style="font-size:28px;margin:0;">Happy Anniversary Kajal</p>
+  <p class="heartbeat-text">Happy Anniversary Kajal</p>
   <p style="font-size:18px;margin:0;">
     11 • 02 • & Forever<br>— Brijesh
   </p>
@@ -252,4 +258,5 @@ yesBtn.onclick = () => {
 
 </body>
 </html>
+
 
