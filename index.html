@@ -101,7 +101,14 @@ button {
   margin: 10px 0;
 }
 
-
+.ring {
+  position: absolute;
+  bottom: -30px;
+  opacity: 0.6;
+  font-size: 18px;       /* adjust size */
+  animation: floatUp linear infinite;
+  z-index: 2;            /* between hearts and slideshow */
+}
 
 /* typewriter */
 .type {
@@ -267,11 +274,22 @@ yesBtn.onclick = () => {
     h.style.animationDuration=(8+Math.random()*6)+"s";
     document.body.appendChild(h);
   }
+  for(let i=0;i<6;i++){
+  const r = document.createElement("div");
+  r.className = "ring";
+  r.innerHTML = "💍";              // use image if you prefer
+  r.style.left = Math.random()*100+"vw";
+  r.style.fontSize = (18+Math.random()*14)+"px"; // random size
+  r.style.animationDuration = (8+Math.random()*6)+"s"; // random speed
+  document.body.appendChild(r);
+}
+
 };
 </script>
 
 </body>
 </html>
+
 
 
 
