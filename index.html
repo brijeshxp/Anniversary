@@ -230,7 +230,7 @@ const yesBtn = document.getElementById("yes");
 function moveNo(){
   noBtn.style.left = Math.random()*(window.innerWidth-80)+"px";
   noBtn.style.top = Math.random()*(window.innerHeight-40)+"px";
-  noBtn.innerText = ["No","Nope","Nice try","😜"][Math.floor(Math.random()*4)];
+  noBtn.innerText = ["No","No Kajal","Nice try","😜","Shut up"][Math.floor(Math.random()*5)];
 }
 noBtn.onmouseenter = moveNo;
 noBtn.onmousedown = moveNo;
@@ -272,6 +272,7 @@ yesBtn.onclick = () => {
 
 </body>
 </html>
+
 
 
 
