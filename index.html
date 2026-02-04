@@ -3,40 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Brijesh ❤️ Kajal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ---------- BASE ---------- */
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(120deg, #fafcff, #f6fff8, #fff7f0);
   font-family: Arial, sans-serif;
+  background: linear-gradient(120deg,#fafcff,#f6fff8,#fff7f0);
   overflow: hidden;
-  opacity: 0;
-  animation: fadeIn 1.2s ease forwards;
 }
 
-@keyframes fadeIn { to { opacity: 1; } }
-
-/* ---------- CINEMATIC DIM ---------- */
-body.dimmed::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.18);
-  z-index: 3;
-  pointer-events: none;
-}
-
-/* ---------- CENTER CONTENT ---------- */
+/* ---------- FIRST SCREEN ---------- */
 .container {
-  position: fixed;
+  position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   z-index: 5;
+}
+
+.center-box {
+  text-align: center;
   padding: 20px;
 }
 
@@ -44,18 +35,17 @@ h1, h2, h3 {
   margin: 10px 0;
 }
 
-/* ---------- BUTTONS ---------- */
 button {
-  padding: 14px 36px;
+  padding: 14px 34px;
   font-size: 16px;
   border-radius: 40px;
   border: none;
   cursor: pointer;
-  margin: 20px 14px 0;
+  margin: 18px 12px 0;
 }
 
 #yes {
-  background: linear-gradient(135deg, #9be7c4, #4fd1a5);
+  background: linear-gradient(135deg,#9be7c4,#4fd1a5);
   color: #0f5132;
   box-shadow: 0 10px 25px rgba(79,209,165,0.45);
 }
@@ -68,38 +58,40 @@ button {
   position: fixed;
 }
 
-/* ---------- TYPEWRITER ---------- */
+/* ---------- SECOND SCREEN ---------- */
+.reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  z-index: 3;
+}
+
+/* typewriter */
 .type {
   font-size: 34px;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid transparent;
+  border-right: 3px solid rgba(0,0,0,0.4);
   width: 0;
-  animation: typing 3s steps(40,end) forwards;
-  margin: 10px auto;
+  animation: typing 3s steps(30,end) forwards, blink .7s infinite;
 }
 
-.type.delay { animation-delay: 3.3s; }
+@keyframes typing { to { width: 100%; } }
+@keyframes blink { 50% { border-color: transparent; } }
 
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-/* ---------- REVEAL ---------- */
-.reveal {
-  opacity: 0;
-  animation: fadeIn 1.2s forwards;
-}
-
-@keyframes fadeIn { to { opacity: 1; } }
-
-/* ---------- SLIDESHOW ---------- */
+/* slideshow */
 .slideshow {
   position: relative;
-  width: min(80vw, 520px);
-  height: min(50vh, 360px);
-  margin: 24px auto;
+  width: 70vw;
+  max-width: 700px;
+  height: 45vh;
+  max-height: 420px;
+  margin: 25px 0;
 }
 
 .slideshow img {
@@ -109,125 +101,116 @@ button {
   height: 100%;
   object-fit: contain;
   opacity: 0;
-  animation: slideShow 16s infinite;
+  animation: slide 16s infinite;
 }
 
-.slideshow img:nth-child(1){animation-delay:0s}
-.slideshow img:nth-child(2){animation-delay:4s}
-.slideshow img:nth-child(3){animation-delay:8s}
-.slideshow img:nth-child(4){animation-delay:12s}
+.slideshow img:nth-child(1) { animation-delay: 0s; }
+.slideshow img:nth-child(2) { animation-delay: 4s; }
+.slideshow img:nth-child(3) { animation-delay: 8s; }
+.slideshow img:nth-child(4) { animation-delay: 12s; }
 
-@keyframes slideShow {
-  0%{opacity:0}
-  10%{opacity:1}
-  25%{opacity:1}
-  35%{opacity:0}
+@keyframes slide {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  25% { opacity: 1; }
+  35% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
-/* ---------- ANNIVERSARY TEXT ---------- */
-.anniv-text {
-  font-size: 28px;
-  line-height: 1.4;
-}
-
-.anniv-text .date {
-  font-size: 20px;
-  opacity: 0.85;
-}
-
-/* ---------- FALLING PHOTOS ---------- */
+/* falling pics */
 .fall {
   position: absolute;
-  top: -160px;
-  animation: fallDown linear infinite;
+  top: -150px;
+  opacity: 0.6;
+  animation: fall linear infinite;
   z-index: 1;
-  opacity: 0.7;
 }
 
-@keyframes fallDown {
+@keyframes fall {
   to { transform: translateY(140vh); opacity: 0; }
 }
 
-/* ---------- HEARTS ---------- */
+/* hearts */
 .heart {
   position: absolute;
-  bottom: -20px;
+  bottom: -30px;
+  opacity: .25;
   animation: floatUp linear infinite;
-  z-index: 1;
 }
 
 @keyframes floatUp {
   to { transform: translateY(-120vh); opacity: 0; }
 }
 
-/* ---------- MOBILE ---------- */
+/* phone */
 @media (max-width:600px){
+  .slideshow { width: 90vw; height: 50vh; }
   .type { font-size: 26px; }
-  .anniv-text { font-size: 22px; }
-  .anniv-text .date { font-size: 16px; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="content">
-  <div>
+<div class="container" id="first">
+  <div class="center-box">
     <h1>Hey Kajal, 11 February wasn’t just a date.</h1>
     <h2>It was a choice.</h2>
     <h3>Will you choose me again?</h3>
-
-    <button id="yes" onclick="yesClicked()">Yes</button>
+    <button id="yes">Yes</button>
     <button id="no">No</button>
   </div>
+</div>
+
+<div class="reveal" id="second">
+<div class="type">In every version of my life…</div>
+<div class="type delay">it’s you 💚</div>
+
+  <div class="slideshow">
+    <img src="S1.jpg">
+    <img src="S2.jpg">
+    <img src="S3.jpg">
+    <img src="S4.jpg">
+  </div>
+
+  <p style="font-size:28px;margin:0;">
+    Happy Anniversary Kajal<br>
+    </p>
+     <p style="font-size:18px;margin:0;">
+    11 • 02 • & Forever<br><br>
+    — Brijesh
+</p>
+
+        <p>And I’d still choose you… every single time.</p>
+  </p>
 </div>
 
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <script>
 const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
 
 function moveNo(){
-  noBtn.style.left = Math.random()*(window.innerWidth-120)+"px";
-  noBtn.style.top = Math.random()*(window.innerHeight-60)+"px";
+  noBtn.style.left = Math.random()*(window.innerWidth-80)+"px";
+  noBtn.style.top = Math.random()*(window.innerHeight-40)+"px";
 }
 noBtn.onmouseenter = moveNo;
 noBtn.onmousedown = moveNo;
 
-function yesClicked(){
-  document.body.classList.add("dimmed");
+yesBtn.onclick = () => {
   document.getElementById("bgMusic").play().catch(()=>{});
-  noBtn.remove();
+  document.getElementById("first").style.display="none";
+  document.getElementById("second").style.opacity="1";
 
-  const content = document.getElementById("content");
-  content.innerHTML = `
-    <div class="reveal">
-      <div class="type">In every version of my life…</div>
-      <div class="type delay">it’s you 💚</div>
-
-      <div class="slideshow">
-        <img src="S1.jpg">
-        <img src="S2.jpg">
-        <img src="S3.jpg">
-        <img src="S4.jpg">
-      </div>
-
-      <p class="anniv-text">
-        Happy Anniversary Kajal<br>
-        <span class="date">11 • 02 • & Forever</span><br><br>
-        — Brijesh
-      </p>
-    </div>
-  `;
-
-  const pics = ["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
+  const pics=["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
   pics.forEach(p=>{
     const i=document.createElement("img");
     i.src=p;
     i.className="fall";
-    i.style.left=Math.random()*100+"vw";
-    i.style.width=(160+Math.random()*140)+"px";
-    i.style.animationDuration=(8+Math.random()*6)+"s";
+    i.style.left=Math.random()*90+"vw";
+    i.style.width=(180+Math.random()*160)+"px";
+    i.style.animationDuration=(10+Math.random()*8)+"s";
     document.body.appendChild(i);
   });
 
@@ -236,13 +219,11 @@ function yesClicked(){
     h.className="heart";
     h.innerHTML="❤️";
     h.style.left=Math.random()*100+"vw";
-    h.style.fontSize=(14+Math.random()*14)+"px";
+    h.style.fontSize=(14+Math.random()*16)+"px";
     h.style.animationDuration=(8+Math.random()*6)+"s";
     document.body.appendChild(h);
   }
-
-  setTimeout(()=>document.body.classList.remove("dimmed"),6000);
-}
+};
 </script>
 
 </body>
