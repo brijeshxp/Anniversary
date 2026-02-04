@@ -2,37 +2,104 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Brijesh ❤️ Kajal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hero Slideshow</title>
 
 <style>
-* {
+* { box-sizing: border-box; }
+
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  height: 100vh;
   font-family: Arial, sans-serif;
+  background: linear-gradient(120deg,#fafcff,#f6fff8,#fff7f0);
+  overflow: hidden;
 }
 
-/* ---------- HERO SECTION ---------- */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-  background: #000;
+/* ---------- FIRST SCREEN ---------- */
+.container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
 }
+
+.center-box {
+  text-align: center;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  margin: 10px 0;
+}
+
+button {
+  padding: 14px 34px;
+  font-size: 16px;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  margin: 18px 12px 0;
+}
+
+#yes {
+  background: linear-gradient(135deg,#9be7c4,#4fd1a5);
+  color: #0f5132;
+  box-shadow: 0 10px 25px rgba(79,209,165,0.45);
+}
+
+#yes:hover { transform: scale(1.1); }
+
+#no {
+  background: #b0b0b0;
+  color: white;
+  position: fixed;
+}
+
+/* ---------- SECOND SCREEN ---------- */
+.reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  z-index: 3;
+}
+
+/* typewriter */
+.type {
+  font-size: 34px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid rgba(0,0,0,0.4);
+  width: 0;
+  animation: typing 3s steps(30,end) forwards, blink .7s infinite;
+}
+
+@keyframes typing { to { width: 100%; } }
+@keyframes blink { 50% { border-color: transparent; } }
 
 /* slideshow */
 .slideshow {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+  position: relative;
+  width: 70vw;
+  max-width: 700px;
+  height: 45vh;
+  max-height: 420px;
+  margin: 25px 0;
 }
 
 .slideshow img {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   opacity: 0;
   animation: slide 16s infinite;
 }
@@ -50,168 +117,107 @@
   100% { opacity: 0; }
 }
 
-/* overlay */
-.hero::after {
-  content: "";
+/* falling pics */
+.fall {
   position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 2;
+  top: -150px;
+  opacity: 0.6;
+  animation: fall linear infinite;
+  z-index: 1;
 }
-
-/* hero text */
-.hero-content {
-  position: relative;
-  z-index: 3;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  padding: 20px;
-}
-
-.hero-content h1 {
-  font-size: clamp(32px, 5vw, 60px);
-  font-weight: 600;
-}
-
-.hero-content p {
-  margin-top: 10px;
-  font-size: clamp(16px, 2vw, 22px);
-  opacity: 0.85;
-}
-
-/* ---------- FALLING IMAGES ---------- */
-.falling {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.falling img {
-  position: absolute;
-  width: 80px;
-  animation: fall 10s linear infinite;
-  opacity: 0.8;
-}
-
-.falling img:nth-child(1) { left: 10%; animation-delay: 0s; }
-.falling img:nth-child(2) { left: 30%; animation-delay: 2s; }
-.falling img:nth-child(3) { left: 55%; animation-delay: 4s; }
-.falling img:nth-child(4) { left: 75%; animation-delay: 6s; }
 
 @keyframes fall {
-  from { top: -100px; }
-  to { top: 110%; }
+  to { transform: translateY(140vh); opacity: 0; }
 }
 
-/* ---------- CINEMATIC TEXT SECTION ---------- */
-.scene-text {
-  min-height: 100vh;
-  background: #0b0b0b;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px;
+/* hearts */
+.heart {
+  position: absolute;
+  bottom: -30px;
+  opacity: .25;
+  animation: floatUp linear infinite;
 }
 
-.scene-text h1,
-.scene-text h2 {
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid white;
-  opacity: 0;
-  margin: 10px 0;
+@keyframes floatUp {
+  to { transform: translateY(-120vh); opacity: 0; }
 }
 
-.scene-text h1 {
-  font-size: clamp(28px, 4vw, 52px);
-}
-
-.scene-text h2 {
-  font-size: clamp(20px, 3vw, 36px);
-  color: #ccc;
-}
-
-/* typing animation */
-.type-animate {
-  animation: typing 2.8s steps(30,end) forwards,
-             blink 0.7s infinite;
-}
-
-.delay {
-  animation-delay: 3s;
-}
-
-@keyframes typing {
-  from { width: 0; opacity: 1; }
-  to { width: 100%; opacity: 1; }
-}
-
-@keyframes blink {
-  50% { border-color: transparent; }
-}
-
-/* ---------- RESPONSIVE FIX ---------- */
-@media (min-width: 1024px) {
-  .slideshow img {
-    object-position: center;
-  }
+/* phone */
+@media (max-width:600px){
+  .slideshow { width: 90vw; height: 50vh; }
+  .type { font-size: 26px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<section class="hero">
+<div class="container" id="first">
+  <div class="center-box">
+    <h1>Hey Kajal, 11 February wasn’t just a date.</h1>
+    <h2>It was a choice.</h2>
+    <h3>Will you choose me again?</h3>
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+  </div>
+</div>
+
+<div class="reveal" id="second">
+  <div class="type">In every version of my life… it’s you 💚</div>
 
   <div class="slideshow">
-    <img src="s1.jpg">
-    <img src="s2.jpg">
-    <img src="s3.jpg">
-    <img src="s4.jpg">
+    <img src="S1.jpg">
+    <img src="S2.jpg">
+    <img src="S3.jpg">
+    <img src="S4.jpg">
   </div>
 
-  <div class="falling">
-    <img src="p1.png">
-    <img src="p2.png">
-    <img src="p3.png">
-    <img src="p4.png">
-  </div>
+  <p style="font-size:28px;margin:0;">
+    Happy Anniversary Kajal<br>
+    11 • 02 • & Forever<br><br>
+    — Brijesh
+  </p>
+</div>
 
-  <div class="hero-content">
-    <h1>Your Brand Name</h1>
-    <p>Architecture • Interiors • Experiences</p>
-  </div>
-
-</section>
-
-<!-- CINEMATIC NEXT SCREEN -->
-<section class="scene-text">
-  <h1 class="typewriter">We don’t just design spaces.</h1>
-  <h2 class="typewriter delay">We design experiences.</h2>
-</section>
+<audio id="bgMusic" src="music.mp3" loop></audio>
 
 <script>
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.typewriter')
-        .forEach(el => el.classList.add('type-animate'));
-      observer.unobserve(entry.target);
-    }
-  });
-},{ threshold: 0.6 });
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
 
-observer.observe(document.querySelector('.scene-text'));
+function moveNo(){
+  noBtn.style.left = Math.random()*(window.innerWidth-80)+"px";
+  noBtn.style.top = Math.random()*(window.innerHeight-40)+"px";
+}
+noBtn.onmouseenter = moveNo;
+noBtn.onmousedown = moveNo;
+
+yesBtn.onclick = () => {
+  document.getElementById("bgMusic").play().catch(()=>{});
+  document.getElementById("first").style.display="none";
+  document.getElementById("second").style.opacity="1";
+
+  const pics=["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg","P11.jpg"];
+  pics.forEach(p=>{
+    const i=document.createElement("img");
+    i.src=p;
+    i.className="fall";
+    i.style.left=Math.random()*90+"vw";
+    i.style.width=(180+Math.random()*160)+"px";
+    i.style.animationDuration=(10+Math.random()*8)+"s";
+    document.body.appendChild(i);
+  });
+
+  for(let i=0;i<6;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(14+Math.random()*16)+"px";
+    h.style.animationDuration=(8+Math.random()*6)+"s";
+    document.body.appendChild(h);
+  }
+};
 </script>
 
 </body>
