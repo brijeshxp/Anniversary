@@ -29,6 +29,15 @@ body {
   z-index: 5;
 }
 
+.center-box {
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* stack children vertically */
+  align-items: center;
+  justify-content: center;
+  gap: 12px; /* spacing between lines */
+}
+
 /* Pulse animation for PNG Logo */
 .Logo-container img {
   animation: LogoPulse 2s infinite;
@@ -42,17 +51,34 @@ body {
   100% { transform: scale(1); opacity: 0.8; }
 }
 
-.center-box { padding: 20px; }
+/* animated text */
+.animated-text {
+  display: block; /* forces each line on its own row */
+  text-align: center;
+  margin: 0;
+  opacity: 0;
+}
 
-h1, h2, h3 { margin: 10px 0; }
+.smash { font-size: 48px; font-weight: bold; animation: smashFadeIn 1s forwards; }
+.delay1 { animation: smashFadeIn 1s forwards; animation-delay: 1s; }
+.delay2 { animation: smashFadeIn 1s forwards; animation-delay: 2s; }
+.delay3 { animation: smashFadeIn 1s forwards; animation-delay: 3s; }
 
+@keyframes smashFadeIn {
+  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+  50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+  70% { transform: scale(0.95) rotate(-5deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* buttons */
+.button-row { display: flex; gap: 16px; margin-top: 16px; }
 button {
   padding: 14px 34px;
   font-size: 16px;
   border-radius: 40px;
   border: none;
   cursor: pointer;
-  margin: 18px 12px 0;
 }
 
 #yes {
@@ -61,7 +87,6 @@ button {
   box-shadow: 0 10px 25px rgba(79,209,165,0.45);
   animation: heartbeat 1.8s infinite;
 }
-
 #yes:hover { transform: scale(1.1); }
 
 @keyframes heartbeat {
@@ -78,44 +103,6 @@ button {
   color: white;
   position: fixed;
 }
-
-/* ---------- FIRST SCREEN TEXT ANIMATIONS ---------- */
-@keyframes smashFadeIn {
-  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
-  50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
-  70% { transform: scale(0.95) rotate(-5deg); }
-  100% { transform: scale(1) rotate(0deg); opacity: 1; }
-}
-
-@keyframes screenShake {
-  0% { transform: translate(0,0); }
-  10% { transform: translate(-5px, 5px); }
-  20% { transform: translate(5px, -5px); }
-  30% { transform: translate(-5px, 5px); }
-  40% { transform: translate(5px, -5px); }
-  50% { transform: translate(-2px, 2px); }
-  60% { transform: translate(2px, -2px); }
-  70% { transform: translate(-1px, 1px); }
-  80% { transform: translate(1px, -1px); }
-  100% { transform: translate(0,0); }
-}
-
-.animated-text {
-  opacity: 0;
-  text-align: center;
-  margin: 12px 0;
-  display: inline-block;
-}
-
-.smash {
-  font-size: 48px;
-  font-weight: bold;
-  animation: smashFadeIn 1s forwards;
-}
-
-.delay1 { animation: smashFadeIn 1s forwards; animation-delay: 1s; }
-.delay2 { animation: smashFadeIn 1s forwards; animation-delay: 2s; }
-.delay3 { animation: smashFadeIn 1s forwards; animation-delay: 3s; }
 
 /* ---------- SECOND SCREEN ---------- */
 .reveal {
@@ -238,6 +225,7 @@ button {
 @media (max-width:600px){
   .type { font-size: 26px; }
   .slideshow { width: 90vw; height: 50vh; }
+  #yes, #no { width: 120px; }
 }
 </style>
 </head>
@@ -258,8 +246,11 @@ button {
     <h2 class="animated-text delay2" id="line3">It’s a choice.</h2>
     <h3 class="animated-text delay3" id="line4">Will you choose me again?</h3>
 
-    <button id="yes">Yes</button>
-    <button id="no">No</button>
+    <!-- Buttons -->
+    <div class="button-row">
+      <button id="yes">Yes</button>
+      <button id="no">No</button>
+    </div>
 
   </div>
 </div>
@@ -301,7 +292,6 @@ yesBtn.onclick = () => {
   document.getElementById("bgMusic").play().catch(()=>{});
   document.getElementById("first").style.opacity="0";
 
-  // Reveal second screen after fade
   setTimeout(()=>{
     document.getElementById("first").style.display="none";
     document.getElementById("second").style.opacity="1";
@@ -340,12 +330,6 @@ yesBtn.onclick = () => {
     document.body.appendChild(r);
   }
 };
-
-// Screen shake + sound for first line
-window.addEventListener('load', () => {
-  const line1 = document.getElementById('line1');
-  const container = document.getElementById('first');
-});
 </script>
 
 </body>
