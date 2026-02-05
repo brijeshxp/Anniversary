@@ -28,6 +28,7 @@ body {
   transition: opacity 1s ease;
   z-index: 5;
 }
+
 /* Pulse animation for PNG Logo */
 .Logo-container img {
   animation: LogoPulse 2s infinite;
@@ -63,17 +64,11 @@ button {
 
 #yes:hover { transform: scale(1.1); }
 
-
-@keyframes pulse {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
-}
-  
 @keyframes heartbeat {
   0%   { transform: scale(1); }
-  14%  { transform: scale(1.12); } /* lub */
+  14%  { transform: scale(1.12); }
   28%  { transform: scale(1); }
-  42%  { transform: scale(1.08); } /* dub */
+  42%  { transform: scale(1.08); }
   70%  { transform: scale(1); }
   100% { transform: scale(1); }
 }
@@ -84,7 +79,43 @@ button {
   position: fixed;
 }
 
+/* ---------- FIRST SCREEN TEXT ANIMATIONS ---------- */
+@keyframes smashFadeIn {
+  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+  50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+  70% { transform: scale(0.95) rotate(-5deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
 
+@keyframes screenShake {
+  0% { transform: translate(0,0); }
+  10% { transform: translate(-5px, 5px); }
+  20% { transform: translate(5px, -5px); }
+  30% { transform: translate(-5px, 5px); }
+  40% { transform: translate(5px, -5px); }
+  50% { transform: translate(-2px, 2px); }
+  60% { transform: translate(2px, -2px); }
+  70% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+  100% { transform: translate(0,0); }
+}
+
+.animated-text {
+  opacity: 0;
+  text-align: center;
+  margin: 12px 0;
+  display: inline-block;
+}
+
+.smash {
+  font-size: 48px;
+  font-weight: bold;
+  animation: smashFadeIn 1s forwards;
+}
+
+.delay1 { animation: smashFadeIn 1s forwards; animation-delay: 1s; }
+.delay2 { animation: smashFadeIn 1s forwards; animation-delay: 2s; }
+.delay3 { animation: smashFadeIn 1s forwards; animation-delay: 3s; }
 
 /* ---------- SECOND SCREEN ---------- */
 .reveal {
@@ -100,24 +131,21 @@ button {
   z-index: 3;
 }
 
-/* ---------------- Heartbeat + Glow Anniversary Text ---------------- */
+/* Heartbeat + Glow Anniversary Text */
 .heartbeat-text {
-  font-family: 'Cinzel', serif;       /* elegant wedding-ring engraving font */
-  font-size: 32px;                     /* big enough to stand out */
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
   font-weight: 600;
   font-style: italic;
-  color: #7a1c2d;                      /* deep ruby red */
-  display: inline-block;                /* required for transform scaling */
-  line-height: 1.2;                     /* spacing for multi-line */
+  color: #7a1c2d;
+  display: inline-block;
+  line-height: 1.2;
   margin: 10px 0;
-
-  /* Heartbeat + Glow Animation */
   animation: heartbeatGlow 1.8s infinite;
-  position: relative;
   text-align: center;
+  position: relative;
 }
 
-/* Heartbeat + Glow Animation */
 @keyframes heartbeatGlow {
   0%, 100%   { transform: scale(1); text-shadow: 0 0 5px #ffccd5, 0 0 10px #ff99aa, 0 0 15px #ff6677; }
   14%        { transform: scale(1.12); text-shadow: 0 0 15px #ffccd5, 0 0 25px #ff99aa, 0 0 35px #ff6677; }
@@ -126,32 +154,28 @@ button {
   70%        { transform: scale(1); text-shadow: 0 0 5px #ffccd5, 0 0 10px #ff99aa, 0 0 15px #ff6677; }
 }
 
+/* Falling Rings */
 .ring {
   position: absolute;
   bottom: -30px;
   opacity: 0.6;
-  font-size: 18px;       /* adjust size */
+  font-size: 18px;
   animation: floatUp linear infinite;
-  z-index: 2;            /* between hearts and slideshow */
+  z-index: 2;
 }
 
 /* typewriter */
 .type {
-  font-size: 15px !important ;
+  font-size: 15px !important;
   white-space: nowrap;
   overflow: hidden;
   border-right: 3px solid rgba(0,0,0,0.4);
   width: 0;
-  animation:
-    typing 3s steps(30,end) forwards,
-    blink .7s infinite,
-    cursorHide .1s forwards;
+  animation: typing 3s steps(30,end) forwards, blink .7s infinite, cursorHide .1s forwards;
   animation-delay: 0s, 0s, 3.2s;
 }
 
-.delay {
-  animation-delay: 3.4s, 3.4s, 6.6s;
-}
+.delay { animation-delay: 3.4s, 3.4s, 6.6s; }
 
 @keyframes typing { to { width: 100%; } }
 @keyframes blink { 50% { border-color: transparent; } }
@@ -198,9 +222,7 @@ button {
   z-index: 1;
 }
 
-@keyframes fall {
-  to { transform: translateY(140vh); opacity: 0; }
-}
+@keyframes fall { to { transform: translateY(140vh); opacity: 0; } }
 
 /* hearts */
 .heart {
@@ -210,9 +232,7 @@ button {
   animation: floatUp linear infinite;
 }
 
-@keyframes floatUp {
-  to { transform: translateY(-120vh); opacity: 0; }
-}
+@keyframes floatUp { to { transform: translateY(-120vh); opacity: 0; } }
 
 /* mobile */
 @media (max-width:600px){
@@ -227,16 +247,20 @@ button {
 <div class="container" id="first">
   <div class="center-box">
 
- <!-- Logo for first screen -->
+    <!-- Logo -->
     <div class="Logo-container" style="text-align:center; margin-bottom:20px;">
       <img src="Logo.png" alt="Brijesh & Kajal Logo" style="max-width:200px;">
     </div>
-  
-    <h1>Hey Kajal,<br><br>11 February isn’t just a date.</h1>
-    <h2>It's a choice.</h2>
-    <br><h3>Will you choose me again?</h3>
+
+    <!-- First screen animated text -->
+    <h1 class="animated-text smash" id="line1">Hey Kajal</h1>
+    <h2 class="animated-text delay1" id="line2">11 February isn’t just a date.</h2>
+    <h2 class="animated-text delay2" id="line3">It’s a choice.</h2>
+    <h3 class="animated-text delay3" id="line4">Will you choose me again?</h3>
+
     <button id="yes">Yes</button>
     <button id="no">No</button>
+
   </div>
 </div>
 
@@ -277,6 +301,7 @@ yesBtn.onclick = () => {
   document.getElementById("bgMusic").play().catch(()=>{});
   document.getElementById("first").style.opacity="0";
 
+  // Reveal second screen after fade
   setTimeout(()=>{
     document.getElementById("first").style.display="none";
     document.getElementById("second").style.opacity="1";
@@ -306,42 +331,22 @@ yesBtn.onclick = () => {
     document.body.appendChild(h);
   }
   for(let i=0;i<6;i++){
-  const r = document.createElement("div");
-  r.className = "ring";
-  r.innerHTML = "💍";              // use image if you prefer
-  r.style.left = Math.random()*100+"vw";
-  r.style.fontSize = (18+Math.random()*14)+"px"; // random size
-  r.style.animationDuration = (8+Math.random()*6)+"s"; // random speed
-  document.body.appendChild(r);
-}
-
+    const r = document.createElement("div");
+    r.className = "ring";
+    r.innerHTML = "💍";
+    r.style.left = Math.random()*100+"vw";
+    r.style.fontSize = (18+Math.random()*14)+"px";
+    r.style.animationDuration = (8+Math.random()*6)+"s";
+    document.body.appendChild(r);
+  }
 };
+
+// Screen shake + sound for first line
+window.addEventListener('load', () => {
+  const line1 = document.getElementById('line1');
+  const container = document.getElementById('first');
+});
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
