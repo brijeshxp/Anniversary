@@ -73,10 +73,15 @@ body {
 
 /* buttons */
 .button-row {
-  display: none; /* hidden initially, will appear after texts */
+  display: flex;
   gap: 16px;
-  margin-top: 16px;
+  position: absolute;   /* overlay instead of pushing text */
+  bottom: 40px;         /* distance from bottom */
+  left: 50%;
+  transform: translateX(-50%);
   justify-content: center;
+  opacity: 0;           /* hide initially */
+  transition: opacity 0.5s ease;
 }
 button {
   padding: 14px 34px;
@@ -252,7 +257,7 @@ button {
     <h2 class="animated-text delay2" id="line3">It’s a choice.</h2>
     <h3 class="animated-text delay3" id="line4">Will you choose me again?</h3>
 
-    <!-- Buttons (hidden initially) -->
+    <!-- Buttons (hidden initially, overlaid) -->
     <div class="button-row">
       <button id="yes">Yes</button>
       <button id="no">No</button>
@@ -289,11 +294,12 @@ const yesBtn = document.getElementById("yes");
 const noTexts = ["No","No Kajal","Nice try","😜","Shut up"];
 let noIndex = 0;
 
-// Show buttons after smashing texts
+// Show buttons after smashing texts with smooth fade
 window.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
-    document.querySelector(".button-row").style.display = "flex";
-  }, 4000); // 4s after last text animation
+    const btnRow = document.querySelector(".button-row");
+    btnRow.style.opacity = "1";  // fade in without moving text
+  }, 4000); // after 4s
 });
 
 // No button fly-away + cycle text
