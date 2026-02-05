@@ -32,13 +32,13 @@ body {
 .center-box {
   padding: 20px;
   display: flex;
-  flex-direction: column; /* stack children vertically */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px; /* spacing between lines */
+  gap: 12px;
 }
 
-/* Pulse animation for PNG Logo */
+/* Logo Pulse */
 .Logo-container img {
   animation: LogoPulse 2s infinite;
 }
@@ -51,9 +51,9 @@ body {
   100% { transform: scale(1); opacity: 0.8; }
 }
 
-/* animated text */
+/* animated text lines */
 .animated-text {
-  display: block; /* forces each line on its own row */
+  display: block;
   text-align: center;
   margin: 0;
   opacity: 0;
@@ -72,7 +72,7 @@ body {
 }
 
 /* buttons */
-.button-row { display: flex; gap: 16px; margin-top: 16px; }
+.button-row { display: flex; gap: 16px; margin-top: 16px; justify-content: center; }
 button {
   padding: 14px 34px;
   font-size: 16px;
@@ -101,7 +101,8 @@ button {
 #no {
   background: #b0b0b0;
   color: white;
-  position: fixed;
+  position: relative; /* stay in flex row */
+  margin: 0;
 }
 
 /* ---------- SECOND SCREEN ---------- */
@@ -280,10 +281,14 @@ button {
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 
+const noTexts = ["No","No Kajal","Nice try","😜","Shut up"];
+let noIndex = 0;
+
 function moveNo(){
-  noBtn.style.left = Math.random()*(window.innerWidth-80)+"px";
-  noBtn.style.top = Math.random()*(window.innerHeight-40)+"px";
-  noBtn.innerText = ["No","No Kajal","Nice try","😜","Shut up"][Math.floor(Math.random()*5)];
+  const parentWidth = noBtn.parentElement.offsetWidth;
+  noBtn.style.transform = `translateX(${Math.random()*(parentWidth - noBtn.offsetWidth)}px)`;
+  noBtn.innerText = noTexts[noIndex];
+  noIndex = (noIndex + 1) % noTexts.length;
 }
 noBtn.onmouseenter = moveNo;
 noBtn.onmousedown = moveNo;
