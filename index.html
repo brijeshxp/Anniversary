@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Happy 8th Anniversary ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
 <style>
@@ -25,63 +26,57 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: opacity 1s ease;
   z-index: 5;
 }
 
 .center-box {
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  max-width: 90vw;
 }
 
-/* Logo Pulse */
+/* Logo pulse */
 .Logo-container img {
-  animation: LogoPulse 2s infinite;
+  max-width: 180px;
+  animation: logoPulse 2s infinite;
+  margin-bottom: 16px;
 }
 
-@keyframes LogoPulse {
-  0%   { transform: scale(1); opacity: 0.8; }
-  25%  { transform: scale(1.05); opacity: 1; }
-  50%  { transform: scale(1); opacity: 0.85; }
-  75%  { transform: scale(1.05); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.8; }
+@keyframes logoPulse {
+  0%,100% { transform: scale(1); opacity: .85; }
+  50% { transform: scale(1.05); opacity: 1; }
 }
 
-/* animated text lines */
-.animated-text {
-  display: block;
-  text-align: center;
-  margin: 0;
+/* Smash intro animation */
+.smash {
+  animation: smashIn .6s ease-out forwards;
+}
+
+@keyframes smashIn {
+  0% { transform: scale(3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Text fade sequence */
+.fade {
   opacity: 0;
+  animation: fadeIn .8s ease forwards;
 }
 
-.smash { font-size: 48px; font-weight: bold; animation: smashFadeIn 1s forwards; }
-.delay1 { animation: smashFadeIn 1s forwards; animation-delay: 1s; }
-.delay2 { animation: smashFadeIn 1s forwards; animation-delay: 2s; }
-.delay3 { animation: smashFadeIn 1s forwards; animation-delay: 3s; }
-
-@keyframes smashFadeIn {
-  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
-  50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
-  70% { transform: scale(0.95) rotate(-5deg); }
-  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
-/* buttons */
+h1, h2, h3 { margin: 10px 0; }
+
+/* ---------- BUTTONS ---------- */
 .button-row {
   display: flex;
   gap: 16px;
-  margin-top: 20px;
   justify-content: center;
+  margin-top: 20px;
   opacity: 0;
-  transition: opacity 0.5s ease;
-  position: relative;
+  transition: opacity .6s ease;
 }
-
 
 button {
   padding: 14px 34px;
@@ -91,28 +86,28 @@ button {
   cursor: pointer;
 }
 
+/* YES heartbeat */
 #yes {
   background: linear-gradient(135deg,#9be7c4,#4fd1a5);
   color: #0f5132;
   box-shadow: 0 10px 25px rgba(79,209,165,0.45);
   animation: heartbeat 1.8s infinite;
 }
-#yes:hover { transform: scale(1.1); }
 
 @keyframes heartbeat {
-  0%   { transform: scale(1); }
-  14%  { transform: scale(1.12); }
-  28%  { transform: scale(1); }
-  42%  { transform: scale(1.08); }
-  70%  { transform: scale(1); }
-  100% { transform: scale(1); }
+  0% { transform: scale(1); }
+  14% { transform: scale(1.12); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.08); }
+  70% { transform: scale(1); }
 }
 
+/* NO button (runner) */
 #no {
   background: #b0b0b0;
   color: white;
-  margin: 0;
-  cursor: pointer;
+  position: relative;
+  transition: transform .25s ease;
 }
 
 /* ---------- SECOND SCREEN ---------- */
@@ -129,64 +124,37 @@ button {
   z-index: 3;
 }
 
-/* Heartbeat + Glow Anniversary Text */
-.heartbeat-text {
-  font-family: 'Cinzel', serif;
-  font-size: 32px;
-  font-weight: 600;
-  font-style: italic;
-  color: #7a1c2d;
-  display: inline-block;
-  line-height: 1.2;
-  margin: 10px 0;
-  animation: heartbeatGlow 1.8s infinite;
-  text-align: center;
-  position: relative;
-}
-
-@keyframes heartbeatGlow {
-  0%, 100%   { transform: scale(1); text-shadow: 0 0 5px #ffccd5, 0 0 10px #ff99aa, 0 0 15px #ff6677; }
-  14%        { transform: scale(1.12); text-shadow: 0 0 15px #ffccd5, 0 0 25px #ff99aa, 0 0 35px #ff6677; }
-  28%        { transform: scale(1); text-shadow: 0 0 8px #ffccd5, 0 0 15px #ff99aa, 0 0 20px #ff6677; }
-  42%        { transform: scale(1.08); text-shadow: 0 0 12px #ffccd5, 0 0 20px #ff99aa, 0 0 30px #ff6677; }
-  70%        { transform: scale(1); text-shadow: 0 0 5px #ffccd5, 0 0 10px #ff99aa, 0 0 15px #ff6677; }
-}
-
-/* Rings */
-.ring {
-  position: absolute;
-  bottom: -30px;
-  opacity: 0.6;
-  font-size: 18px;
-  animation: floatUp linear infinite;
-  z-index: 2;
-}
-
-/* typewriter */
+/* Typewriter */
 .type {
-  font-size: 15px !important;
+  font-size: 26px;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 3px solid rgba(0,0,0,0.4);
+  border-right: 3px solid rgba(0,0,0,.4);
   width: 0;
-  animation: typing 3s steps(30,end) forwards, blink .7s infinite, cursorHide .1s forwards;
-  animation-delay: 0s, 0s, 3.2s;
+  animation:
+    typing 3s steps(30,end) forwards,
+    blink .7s infinite,
+    cursorHide .1s forwards;
+  animation-delay: 0s,0s,3.2s;
 }
-.delay { animation-delay: 3.4s, 3.4s, 6.6s; }
+
+.delay {
+  animation-delay: 3.4s,3.4s,6.6s;
+}
 
 @keyframes typing { to { width: 100%; } }
 @keyframes blink { 50% { border-color: transparent; } }
 @keyframes cursorHide { to { border-right: none; } }
 
-/* slideshow */
+/* Slideshow */
 .slideshow {
-  position: relative;
   width: 70vw;
   max-width: 700px;
   height: 45vh;
-  max-height: 420px;
   margin: 25px 0;
+  position: relative;
 }
+
 .slideshow img {
   position: absolute;
   inset: 0;
@@ -196,42 +164,47 @@ button {
   opacity: 0;
   animation: slide 16s infinite;
 }
-.slideshow img:nth-child(1) { animation-delay: 0s; }
-.slideshow img:nth-child(2) { animation-delay: 4s; }
-.slideshow img:nth-child(3) { animation-delay: 8s; }
-.slideshow img:nth-child(4) { animation-delay: 12s; }
+
+.slideshow img:nth-child(1){animation-delay:0s;}
+.slideshow img:nth-child(2){animation-delay:4s;}
+.slideshow img:nth-child(3){animation-delay:8s;}
+.slideshow img:nth-child(4){animation-delay:12s;}
 
 @keyframes slide {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  25% { opacity: 1; }
-  35% { opacity: 0; }
+  10%,25% { opacity: 1; }
+  0%,35%,100% { opacity: 0; }
 }
 
-/* falling pics */
-.fall {
-  position: absolute;
-  top: -150px;
-  opacity: 0.6;
-  animation: fall linear infinite;
-  z-index: 1;
+/* Heartbeat anniversary text */
+.heartbeat-text {
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  font-style: italic;
+  color: #7a1c2d;
+  animation: heartbeatGlow 1.8s infinite;
 }
-@keyframes fall { to { transform: translateY(140vh); opacity: 0; } }
 
-/* hearts */
-.heart {
+@keyframes heartbeatGlow {
+  0%,100% { transform: scale(1); text-shadow: 0 0 6px #ff99aa; }
+  14% { transform: scale(1.12); text-shadow: 0 0 18px #ff6677; }
+}
+
+/* Floating hearts & rings */
+.heart,.ring {
   position: absolute;
   bottom: -30px;
-  opacity: .25;
+  opacity: .3;
   animation: floatUp linear infinite;
 }
-@keyframes floatUp { to { transform: translateY(-120vh); opacity: 0; } }
 
-/* mobile */
-@media (max-width:600px){
-  .type { font-size: 26px; }
+@keyframes floatUp {
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* Mobile */
+@media(max-width:600px){
+  .type { font-size: 20px; }
   .slideshow { width: 90vw; height: 50vh; }
-  #yes, #no { width: 120px; }
 }
 </style>
 </head>
@@ -240,103 +213,64 @@ button {
 
 <div class="container" id="first">
   <div class="center-box">
-
-    <!-- Logo -->
-    <div class="Logo-container" style="text-align:center; margin-bottom:20px;">
-      <img src="Logo.png" alt="Brijesh & Kajal Logo" style="max-width:200px;">
+    <div class="Logo-container">
+      <img src="Logo.png" alt="Logo">
     </div>
 
-    <!-- First screen animated text -->
-    <h1 class="animated-text smash" id="line1">Hey Kajal</h1>
-    <h2 class="animated-text delay1" id="line2">11 February isn’t just a date.</h2>
-    <h2 class="animated-text delay2" id="line3">It’s a choice.</h2>
-    <h3 class="animated-text delay3" id="line4">Will you choose me again?</h3>
+    <h1 class="smash">Hey Kajal,</h1>
+    <h2 class="fade" style="animation-delay:.8s">11 February isn’t just a date.</h2>
+    <h2 class="fade" style="animation-delay:1.6s">It’s a choice.</h2>
+    <h3 class="fade" style="animation-delay:2.4s">Will you choose me again?</h3>
 
-    <!-- Buttons under text -->
-    <div class="button-row">
+    <div class="button-row" id="buttons">
       <button id="yes">Yes</button>
       <button id="no">No</button>
     </div>
-
   </div>
 </div>
 
 <div class="reveal" id="second">
-  <div class="type version">In every version of my life…</div>
+  <div class="type">In every version of my life…</div>
   <div class="type delay">it’s you 💚</div>
 
   <div class="slideshow">
-    <img src="S1.jpg">
-    <img src="S2.jpg">
-    <img src="S3.jpg">
-    <img src="S4.jpg">
+    <img src="S1.jpg"><img src="S2.jpg"><img src="S3.jpg"><img src="S4.jpg">
   </div>
 
-  <p class="heartbeat-text">Happy Anniversary <br>Kajal</p>
-  <p style="font-size:18px;margin:0;">
-    11 • 02 • & Forever<br>— Brijesh
-  </p>
-
-  <p>And I’d still choose you… every single time.</p>
+  <p class="heartbeat-text">Happy Anniversary<br>Kajal</p>
+  <p>11 • 02 • & Forever<br>— Brijesh</p>
 </div>
 
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
+/* Show buttons AFTER text finishes */
+setTimeout(()=>{
+  document.getElementById("buttons").style.opacity="1";
+},3200);
 
+/* NO button behaviour */
+const noBtn = document.getElementById("no");
 const noTexts = ["No","No Kajal","Nice try","😜","Shut up"];
 let noIndex = 0;
 
-// Show buttons after smashing texts with smooth fade
-window.addEventListener("DOMContentLoaded", () => {
-  setTimeout(() => {
-    const btnRow = document.querySelector(".button-row");
-    btnRow.style.opacity = "1";  // fade in
-  }, 4000); 
-});
-
-// No button fly-away + cycle text
-  
-let offsetX = 0;
-let offsetY = 0;
-
 function moveNo(){
-  // cycle text evenly
   noBtn.innerText = noTexts[noIndex];
   noIndex = (noIndex + 1) % noTexts.length;
 
-  // small playful movement
-  offsetX = (Math.random() - 0.5) * 120;
-  offsetY = (Math.random() - 0.5) * 80;
-
-  noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+  const x = (Math.random()-0.5)*160;
+  const y = (Math.random()-0.5)*80;
+  noBtn.style.transform = `translate(${x}px,${y}px)`;
 }
 
-// Yes button click
-yesBtn.onclick = () => {
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+/* YES click */
+document.getElementById("yes").onclick = ()=>{
   document.getElementById("bgMusic").play().catch(()=>{});
-  document.getElementById("first").style.opacity="0";
-
-  setTimeout(()=>{
-    document.getElementById("first").style.display="none";
-    document.getElementById("second").style.opacity="1";
-  },1000);
-
-  const pics=["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg"];
-
-  setTimeout(()=>{
-    pics.forEach(p=>{
-      const i=document.createElement("img");
-      i.src=p;
-      i.className="fall";
-      i.style.left=Math.random()*90+"vw";
-      i.style.width=(180+Math.random()*160)+"px";
-      i.style.animationDuration=(10+Math.random()*8)+"s";
-      document.body.appendChild(i);
-    });
-  },1200);
+  document.getElementById("first").style.display="none";
+  document.getElementById("second").style.opacity="1";
 
   for(let i=0;i<6;i++){
     const h=document.createElement("div");
@@ -347,13 +281,14 @@ yesBtn.onclick = () => {
     h.style.animationDuration=(8+Math.random()*6)+"s";
     document.body.appendChild(h);
   }
+
   for(let i=0;i<6;i++){
-    const r = document.createElement("div");
-    r.className = "ring";
-    r.innerHTML = "💍";
-    r.style.left = Math.random()*100+"vw";
-    r.style.fontSize = (18+Math.random()*14)+"px";
-    r.style.animationDuration = (8+Math.random()*6)+"s";
+    const r=document.createElement("div");
+    r.className="ring";
+    r.innerHTML="💍";
+    r.style.left=Math.random()*100+"vw";
+    r.style.fontSize=(18+Math.random()*14)+"px";
+    r.style.animationDuration=(8+Math.random()*6)+"s";
     document.body.appendChild(r);
   }
 };
@@ -361,5 +296,3 @@ yesBtn.onclick = () => {
 
 </body>
 </html>
-
-
