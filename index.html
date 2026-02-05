@@ -75,14 +75,13 @@ body {
 .button-row {
   display: flex;
   gap: 16px;
-  position: absolute;   /* overlay instead of pushing text */
-  bottom: 40px;         /* distance from bottom */
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative; /* relative inside center-box */
+  margin-top: 20px;
   justify-content: center;
-  opacity: 0;           /* hide initially */
+  opacity: 0;         /* hidden initially */
   transition: opacity 0.5s ease;
 }
+
 button {
   padding: 14px 34px;
   font-size: 16px;
@@ -152,7 +151,7 @@ button {
   70%        { transform: scale(1); text-shadow: 0 0 5px #ffccd5, 0 0 10px #ff99aa, 0 0 15px #ff6677; }
 }
 
-/* Falling Rings */
+/* Rings */
 .ring {
   position: absolute;
   bottom: -30px;
@@ -172,7 +171,6 @@ button {
   animation: typing 3s steps(30,end) forwards, blink .7s infinite, cursorHide .1s forwards;
   animation-delay: 0s, 0s, 3.2s;
 }
-
 .delay { animation-delay: 3.4s, 3.4s, 6.6s; }
 
 @keyframes typing { to { width: 100%; } }
@@ -188,7 +186,6 @@ button {
   max-height: 420px;
   margin: 25px 0;
 }
-
 .slideshow img {
   position: absolute;
   inset: 0;
@@ -198,7 +195,6 @@ button {
   opacity: 0;
   animation: slide 16s infinite;
 }
-
 .slideshow img:nth-child(1) { animation-delay: 0s; }
 .slideshow img:nth-child(2) { animation-delay: 4s; }
 .slideshow img:nth-child(3) { animation-delay: 8s; }
@@ -219,7 +215,6 @@ button {
   animation: fall linear infinite;
   z-index: 1;
 }
-
 @keyframes fall { to { transform: translateY(140vh); opacity: 0; } }
 
 /* hearts */
@@ -229,7 +224,6 @@ button {
   opacity: .25;
   animation: floatUp linear infinite;
 }
-
 @keyframes floatUp { to { transform: translateY(-120vh); opacity: 0; } }
 
 /* mobile */
@@ -257,7 +251,7 @@ button {
     <h2 class="animated-text delay2" id="line3">It’s a choice.</h2>
     <h3 class="animated-text delay3" id="line4">Will you choose me again?</h3>
 
-    <!-- Buttons (hidden initially, overlaid) -->
+    <!-- Buttons under text -->
     <div class="button-row">
       <button id="yes">Yes</button>
       <button id="no">No</button>
@@ -298,8 +292,8 @@ let noIndex = 0;
 window.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     const btnRow = document.querySelector(".button-row");
-    btnRow.style.opacity = "1";  // fade in without moving text
-  }, 4000); // after 4s
+    btnRow.style.opacity = "1";  // fade in
+  }, 4000); 
 });
 
 // No button fly-away + cycle text
@@ -307,9 +301,24 @@ function moveNo(){
   noBtn.innerText = noTexts[noIndex];
   noIndex = (noIndex + 1) % noTexts.length;
 
+  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+  const currentX = parseFloat(noBtn.style.left) || maxX/2;
+  const currentY = parseFloat(noBtn.style.top) || maxY/2;
+
+  const deltaX = (Math.random()-0.5)*200; 
+  const deltaY = (Math.random()-0.5)*200; 
+
+  let newX = currentX + deltaX;
+  let newY = currentY + deltaY;
+
+  newX = Math.min(Math.max(0, newX), maxX);
+  newY = Math.min(Math.max(0, newY), maxY);
+
   noBtn.style.position = "absolute";
-  noBtn.style.top = Math.random()*(window.innerHeight - noBtn.offsetHeight) + "px";
-  noBtn.style.left = Math.random()*(window.innerWidth - noBtn.offsetWidth) + "px";
+  noBtn.style.left = newX + "px";
+  noBtn.style.top = newY + "px";
 }
 
 noBtn.onmouseenter = moveNo;
