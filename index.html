@@ -298,32 +298,21 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // No button fly-away + cycle text
+  
+let offsetX = 0;
+let offsetY = 0;
+
 function moveNo(){
+  // cycle text evenly
   noBtn.innerText = noTexts[noIndex];
   noIndex = (noIndex + 1) % noTexts.length;
 
-  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+  // small playful movement
+  offsetX = (Math.random() - 0.5) * 120;
+  offsetY = (Math.random() - 0.5) * 80;
 
-  const currentX = parseFloat(noBtn.style.left) || maxX/2;
-  const currentY = parseFloat(noBtn.style.top) || maxY/2;
-
-  const deltaX = (Math.random()-0.5)*200; 
-  const deltaY = (Math.random()-0.5)*200; 
-
-  let newX = currentX + deltaX;
-  let newY = currentY + deltaY;
-
-  newX = Math.min(Math.max(0, newX), maxX);
-  newY = Math.min(Math.max(0, newY), maxY);
-
-  noBtn.style.position = "absolute";
-  noBtn.style.left = newX + "px";
-  noBtn.style.top = newY + "px";
+  noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
 }
-
-noBtn.onmouseenter = moveNo;
-noBtn.onmousedown = moveNo;
 
 // Yes button click
 yesBtn.onclick = () => {
@@ -372,4 +361,5 @@ yesBtn.onclick = () => {
 
 </body>
 </html>
+
 
