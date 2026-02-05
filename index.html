@@ -31,14 +31,13 @@ body {
 
 .center-box {
   padding: 20px;
-  max-width: 90vw;
 }
 
-/* Logo pulse */
+/* Logo */
 .Logo-container img {
   max-width: 180px;
   animation: logoPulse 2s infinite;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 @keyframes logoPulse {
@@ -46,33 +45,12 @@ body {
   50% { transform: scale(1.05); opacity: 1; }
 }
 
-/* Smash intro animation */
-.smash {
-  animation: smashIn .6s ease-out forwards;
+h1, h2, h3 {
+  margin: 10px 0;
 }
-
-@keyframes smashIn {
-  0% { transform: scale(3); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* Text fade sequence */
-.fade {
-  opacity: 0;
-  animation: fadeIn .8s ease forwards;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-h1, h2, h3 { margin: 10px 0; }
 
 /* ---------- BUTTONS ---------- */
 .button-row {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
   margin-top: 20px;
   opacity: 0;
   transition: opacity .6s ease;
@@ -84,6 +62,7 @@ button {
   border-radius: 40px;
   border: none;
   cursor: pointer;
+  margin: 0 8px;
 }
 
 /* YES heartbeat */
@@ -102,12 +81,12 @@ button {
   70% { transform: scale(1); }
 }
 
-/* NO button (runner) */
+/* NO button – FREE RUNNER */
 #no {
   background: #b0b0b0;
   color: white;
-  position: relative;
-  transition: transform .25s ease;
+  position: fixed; /* IMPORTANT */
+  z-index: 10;
 }
 
 /* ---------- SECOND SCREEN ---------- */
@@ -124,7 +103,7 @@ button {
   z-index: 3;
 }
 
-/* Typewriter */
+/* typewriter (UNCHANGED feel) */
 .type {
   font-size: 26px;
   white-space: nowrap;
@@ -135,7 +114,6 @@ button {
     typing 3s steps(30,end) forwards,
     blink .7s infinite,
     cursorHide .1s forwards;
-  animation-delay: 0s,0s,3.2s;
 }
 
 .delay {
@@ -146,7 +124,7 @@ button {
 @keyframes blink { 50% { border-color: transparent; } }
 @keyframes cursorHide { to { border-right: none; } }
 
-/* Slideshow */
+/* slideshow */
 .slideshow {
   width: 70vw;
   max-width: 700px;
@@ -175,7 +153,7 @@ button {
   0%,35%,100% { opacity: 0; }
 }
 
-/* Heartbeat anniversary text */
+/* Anniversary text */
 .heartbeat-text {
   font-family: 'Cinzel', serif;
   font-size: 32px;
@@ -187,18 +165,6 @@ button {
 @keyframes heartbeatGlow {
   0%,100% { transform: scale(1); text-shadow: 0 0 6px #ff99aa; }
   14% { transform: scale(1.12); text-shadow: 0 0 18px #ff6677; }
-}
-
-/* Floating hearts & rings */
-.heart,.ring {
-  position: absolute;
-  bottom: -30px;
-  opacity: .3;
-  animation: floatUp linear infinite;
-}
-
-@keyframes floatUp {
-  to { transform: translateY(-120vh); opacity: 0; }
 }
 
 /* Mobile */
@@ -213,19 +179,21 @@ button {
 
 <div class="container" id="first">
   <div class="center-box">
+
     <div class="Logo-container">
       <img src="Logo.png" alt="Logo">
     </div>
 
-    <h1 class="smash">Hey Kajal,</h1>
-    <h2 class="fade" style="animation-delay:.8s">11 February isn’t just a date.</h2>
-    <h2 class="fade" style="animation-delay:1.6s">It’s a choice.</h2>
-    <h3 class="fade" style="animation-delay:2.4s">Will you choose me again?</h3>
+    <h1>Hey Kajal,</h1>
+    <h2>11 February isn’t just a date.</h2>
+    <h2>It’s a choice.</h2>
+    <h3>Will you choose me again?</h3>
 
     <div class="button-row" id="buttons">
       <button id="yes">Yes</button>
       <button id="no">No</button>
     </div>
+
   </div>
 </div>
 
@@ -244,12 +212,12 @@ button {
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <script>
-/* Show buttons AFTER text finishes */
-setTimeout(()=>{
-  document.getElementById("buttons").style.opacity="1";
-},3200);
+/* show buttons AFTER text (no layout jump) */
+setTimeout(() => {
+  document.getElementById("buttons").style.opacity = "1";
+}, 2500);
 
-/* NO button behaviour */
+/* NO button logic – FULL SCREEN RUNNER */
 const noBtn = document.getElementById("no");
 const noTexts = ["No","No Kajal","Nice try","😜","Shut up"];
 let noIndex = 0;
@@ -258,39 +226,24 @@ function moveNo(){
   noBtn.innerText = noTexts[noIndex];
   noIndex = (noIndex + 1) % noTexts.length;
 
-  const x = (Math.random()-0.5)*160;
-  const y = (Math.random()-0.5)*80;
-  noBtn.style.transform = `translate(${x}px,${y}px)`;
+  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
 }
 
 noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("touchstart", moveNo);
 
 /* YES click */
-document.getElementById("yes").onclick = ()=>{
+document.getElementById("yes").onclick = () => {
   document.getElementById("bgMusic").play().catch(()=>{});
   document.getElementById("first").style.display="none";
   document.getElementById("second").style.opacity="1";
-
-  for(let i=0;i<6;i++){
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
-    h.style.fontSize=(14+Math.random()*16)+"px";
-    h.style.animationDuration=(8+Math.random()*6)+"s";
-    document.body.appendChild(h);
-  }
-
-  for(let i=0;i<6;i++){
-    const r=document.createElement("div");
-    r.className="ring";
-    r.innerHTML="💍";
-    r.style.left=Math.random()*100+"vw";
-    r.style.fontSize=(18+Math.random()*14)+"px";
-    r.style.animationDuration=(8+Math.random()*6)+"s";
-    document.body.appendChild(r);
-  }
 };
 </script>
 
