@@ -72,7 +72,12 @@ body {
 }
 
 /* buttons */
-.button-row { display: flex; gap: 16px; margin-top: 16px; justify-content: center; }
+.button-row {
+  display: none; /* hidden initially, will appear after texts */
+  gap: 16px;
+  margin-top: 16px;
+  justify-content: center;
+}
 button {
   padding: 14px 34px;
   font-size: 16px;
@@ -247,7 +252,7 @@ button {
     <h2 class="animated-text delay2" id="line3">It’s a choice.</h2>
     <h3 class="animated-text delay3" id="line4">Will you choose me again?</h3>
 
-    <!-- Buttons -->
+    <!-- Buttons (hidden initially) -->
     <div class="button-row">
       <button id="yes">Yes</button>
       <button id="no">No</button>
@@ -284,6 +289,13 @@ const yesBtn = document.getElementById("yes");
 const noTexts = ["No","No Kajal","Nice try","😜","Shut up"];
 let noIndex = 0;
 
+// Show buttons after smashing texts
+window.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    document.querySelector(".button-row").style.display = "flex";
+  }, 4000); // 4s after last text animation
+});
+
 // No button fly-away + cycle text
 function moveNo(){
   noBtn.innerText = noTexts[noIndex];
@@ -297,6 +309,7 @@ function moveNo(){
 noBtn.onmouseenter = moveNo;
 noBtn.onmousedown = moveNo;
 
+// Yes button click
 yesBtn.onclick = () => {
   document.getElementById("bgMusic").play().catch(()=>{});
   document.getElementById("first").style.opacity="0";
