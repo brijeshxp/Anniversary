@@ -242,7 +242,7 @@ button {
     </div>
 
     <!-- First screen animated text -->
-    <h1 class="animated-text smash" id="line1">Hey Kaju</h1>
+    <h1 class="animated-text smash" id="line1">Hey Kajal</h1>
     <h2 class="animated-text delay1" id="line2">11 February isn’t just a date.</h2>
     <h2 class="animated-text delay2" id="line3">It’s a choice.</h2>
     <h3 class="animated-text delay3" id="line4">Will you choose me again?</h3>
@@ -276,32 +276,8 @@ button {
 </div>
 
 <audio id="bgMusic" src="music.mp3" loop></audio>
-<audio id="slamSound" src="slam.mp3" preload="auto"></audio>
-
 
 <script>
-  
-const slamSound = document.getElementById("slamSound");
-let audioUnlocked = false;
-
-// unlock audio on first click/touch
-document.addEventListener("click", () => {
-  if (!audioUnlocked) {
-    slamSound.play().then(() => {
-      slamSound.pause();
-      slamSound.currentTime = 0;
-      audioUnlocked = true;
-    }).catch(()=>{});
-  }
-}, { once: true });
-
-function playSlam(volume = 0.8){
-  if (!audioUnlocked) return;
-  slamSound.volume = volume;
-  slamSound.currentTime = 0;
-  slamSound.play().catch(()=>{});
-}
-
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 
@@ -368,16 +344,8 @@ yesBtn.onclick = () => {
     document.body.appendChild(r);
   }
 };
-  
-// slam sound sync with text animation
-setTimeout(() => playSlam(1),   100);   // Hey Kajal
-setTimeout(() => playSlam(0.6), 1100);  // 11 February isn’t just a date
-setTimeout(() => playSlam(0.6), 2100);  // It’s a choice
-setTimeout(() => playSlam(0.6), 3100);  // Will you choose me again?
 
 </script>
 
 </body>
 </html>
-
-
