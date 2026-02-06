@@ -243,11 +243,14 @@ button {
 }
 
 // impact effect synced with slam text
+  
 function hit(){
-  document.body.classList.remove("impact");
-  void document.body.offsetWidth; // force reflow
-  document.body.classList.add("impact");
+  const first = document.getElementById("first");
+  first.classList.remove("impact");
+  void first.offsetWidth; // force reflow
+  first.classList.add("impact");
 }
+
 
 setTimeout(hit, 100);   // Hey Kajal
 setTimeout(hit, 1100);  // 11 February isn’t just a date
@@ -376,5 +379,6 @@ yesBtn.onclick = () => {
 
 </body>
 </html>
+
 
 
