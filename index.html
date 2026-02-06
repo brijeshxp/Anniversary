@@ -228,36 +228,6 @@ button {
   .slideshow { width: 90vw; height: 50vh; }
   #yes, #no { width: 120px; }
 }
-  
-/* slam impact shake */
-@keyframes impact {
-  0% { transform: translate(0); }
-  20% { transform: translate(-4px, 3px); }
-  40% { transform: translate(4px, -3px); }
-  60% { transform: translate(-2px, 2px); }
-  100% { transform: translate(0); }
-}
-
-.impact {
-  animation: impact 0.25s;
-}
-
-// impact effect synced with slam text
-  
-function hit(){
-  const first = document.getElementById("first");
-  first.classList.remove("impact");
-  void first.offsetWidth; // force reflow
-  first.classList.add("impact");
-}
-
-
-setTimeout(hit, 100);   // Hey Kajal
-setTimeout(hit, 1100);  // 11 February isn’t just a date
-setTimeout(hit, 2100);  // It’s a choice
-setTimeout(hit, 3100);  // Will you choose me again?
-
-  
 </style>
 </head>
 
@@ -311,7 +281,7 @@ setTimeout(hit, 3100);  // Will you choose me again?
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 
-const noTexts = ["No","No Kajal","Nice try","😜","Not happening"];
+const noTexts = ["No","No Kajal","Nice try","😜","Shut up"];
 let noIndex = 0;
 
 // No button fly-away + cycle text
@@ -379,6 +349,3 @@ yesBtn.onclick = () => {
 
 </body>
 </html>
-
-
-
