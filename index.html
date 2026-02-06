@@ -299,12 +299,16 @@ noBtn.onmousedown = moveNo;
 
 yesBtn.onclick = () => {
   document.getElementById("bgMusic").play().catch(()=>{});
-  document.getElementById("first").style.opacity="0";
 
-  setTimeout(()=>{
-    document.getElementById("first").style.display="none";
-    document.getElementById("second").style.opacity="1";
-  },1000);
+  // tiny pause so the "Yes" moment sinks in
+  setTimeout(() => {
+    document.getElementById("first").style.opacity = "0";
+  }, 300);
+
+  setTimeout(() => {
+    document.getElementById("first").style.display = "none";
+    document.getElementById("second").style.opacity = "1";
+  }, 1300);
 
   const pics=["P1.jpg","P2.jpg","P3.jpg","P4.jpg","P5.jpg","P6.jpg","P7.jpg","P8.jpg","P9.jpg","P10.jpg"];
 
@@ -329,17 +333,20 @@ yesBtn.onclick = () => {
     h.style.animationDuration=(8+Math.random()*6)+"s";
     document.body.appendChild(h);
   }
+
   for(let i=0;i<6;i++){
-    const r = document.createElement("div");
-    r.className = "ring";
-    r.innerHTML = "💍";
-    r.style.left = Math.random()*100+"vw";
-    r.style.fontSize = (18+Math.random()*14)+"px";
-    r.style.animationDuration = (8+Math.random()*6)+"s";
+    const r=document.createElement("div");
+    r.className="ring";
+    r.innerHTML="💍";
+    r.style.left=Math.random()*100+"vw";
+    r.style.fontSize=(18+Math.random()*14)+"px";
+    r.style.animationDuration=(8+Math.random()*6)+"s";
     document.body.appendChild(r);
   }
 };
+
 </script>
 
 </body>
 </html>
+
