@@ -16,19 +16,6 @@ body {
   background: linear-gradient(120deg,#fafcff,#f6fff8,#fff7f0);
   overflow: hidden;
 }
-const slamSound = document.getElementById("slamSound");
-
-function playSlam(volume = 0.8){
-  slamSound.volume = volume;
-  slamSound.currentTime = 0;
-  slamSound.play().catch(()=>{});
-}
-
-// sync slam sound with text animations
-setTimeout(() => playSlam(1),   100);   // Hey Kajal
-setTimeout(() => playSlam(0.6), 1100);  // 11 February isn’t just a date
-setTimeout(() => playSlam(0.6), 2100);  // It’s a choice
-setTimeout(() => playSlam(0.6), 3100);  // Will you choose me again?
 
 /* ---------- FIRST SCREEN ---------- */
 .container {
@@ -360,8 +347,5 @@ yesBtn.onclick = () => {
 
 </script>
 
-  <audio id="slamSound" src="slam.mp3" preload="auto"></audio>
-
 </body>
 </html>
-
